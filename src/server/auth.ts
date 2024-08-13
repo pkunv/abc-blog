@@ -5,7 +5,9 @@ import {
   type NextAuthOptions,
 } from "next-auth";
 import { type Adapter } from "next-auth/adapters";
+import CredentialsProvider from "next-auth/providers/credentials";
 
+import { env } from "@/env";
 import { db } from "@/server/db";
 
 /**
@@ -35,17 +37,54 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
+  session: {
+    strategy: "jwt",
+    maxAge: 3000,
+  },
   callbacks: {
-    session: ({ session, user }) => ({
+    async jwt({ token, user }) {
+      const isSignIn = user ? true : false;
+      if (isSignIn) {
+        token.username = user.name;
+        token.uid = user.id;
+      }
+
+      return token;
+    },
+    session: ({ session, token }) => ({
       ...session,
       user: {
         ...session.user,
-        id: user.id,
+        id: token.sub,
       },
     }),
   },
   adapter: PrismaAdapter(db) as Adapter,
   providers: [
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        username: { label: "Username", type: "text" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        if (!credentials) return null;
+
+        if (
+          credentials.username !== env.ADMIN_USERNAME &&
+          credentials.password !== env.ADMIN_PASSWORD
+        )
+          return null;
+
+        return db.user.upsert({
+          where: { name: env.ADMIN_USERNAME },
+          create: {
+            name: env.ADMIN_USERNAME,
+          },
+          update: {},
+        });
+      },
+    }),
     /**
      * ...add more providers here.
      *
