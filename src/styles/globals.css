@@ -67,3 +67,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+.parent-h3-hover {
+  h3:hover {
+    text-decoration: underline;
+  }
+}
