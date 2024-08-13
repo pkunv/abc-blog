@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import { GeistMono } from "geist/font/mono";
 import { type Metadata } from "next";
 
+import { ThemeProvider } from "@/components/ui/theme-provider";
 import { TRPCReactProvider } from "@/trpc/react";
 
 export const metadata: Metadata = {
@@ -18,7 +19,16 @@ export default function RootLayout({
     <html lang="en" className={`${GeistMono.variable}`}>
       <body>
         <TRPCReactProvider>
-          <main className="flex max-w-2xl flex-col">{children}</main>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <main className="mx-auto flex w-full max-w-2xl flex-col items-center justify-center gap-2 p-2">
+              {children}
+            </main>
+          </ThemeProvider>
         </TRPCReactProvider>
       </body>
     </html>
