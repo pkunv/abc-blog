@@ -12,7 +12,7 @@ export async function PostList({ href }: { href: "/dashboard" | "/posts" }) {
           key={post.id}
           href={`${href}/${post.slug}`}
           className={
-            "text-primary hover:bg-accent hover:text-accent-foreground parent-h3-hover p-2 underline-offset-4"
+            "parent-h3-hover p-2 text-primary underline-offset-4 hover:bg-accent hover:text-accent-foreground"
           }
         >
           <TypographyH3>{post.title}</TypographyH3>

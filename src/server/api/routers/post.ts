@@ -7,6 +7,10 @@ import { postSchema } from "@/trpc/schemas";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
+const postInclude = {
+  createdBy: true,
+};
+
 function convertTitleToSlug(title: string) {
   const slugContent =
     title.length > 24 ? title.split(" ").slice(0, 5).join(" ") : title;
@@ -21,6 +25,7 @@ export const postRouter = createTRPCRouter({
     .input(z.object({ id: z.number().optional(), slug: z.string().optional() }))
     .query(async ({ input, ctx }) => {
       return ctx.db.post.findFirst({
+        include: postInclude,
         where: { id: input.id, slug: input.slug },
       });
     }),
@@ -33,6 +38,7 @@ export const postRouter = createTRPCRouter({
     )
     .query(async ({ input, ctx }) => {
       return ctx.db.post.findMany({
+        include: postInclude,
         orderBy: { createdAt: input.orderBy },
         take: input.take,
       });

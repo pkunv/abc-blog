@@ -68,8 +68,6 @@
   }
 }
 
-.parent-h3-hover {
-  h3:hover {
-    text-decoration: underline;
-  }
+.parent-h3-hover:hover h3 {
+  text-decoration: underline;
 }
