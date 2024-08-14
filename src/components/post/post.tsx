@@ -22,10 +22,10 @@ export default function Post({
         ? data.title.split(" ").slice(0, 5).join(" ")
         : data.title,
     editor: data.createdBy.name,
-    wordCount: data.content.split(" ").length,
+    wordCount: data.content.length,
     datePublished: data.createdAt.toISOString(),
     dateModified: data.updatedAt?.toISOString(),
-    description: `Blog post about ${data.keywords} on ${blog.language}`,
+    description: `Blog post about ${data.keywords} on ${blog.name}`,
     articleBody: data.content,
     author: {
       "@type": "Person",
