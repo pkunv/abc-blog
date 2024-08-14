@@ -58,6 +58,7 @@ export const postRouter = createTRPCRouter({
           title: input.title,
           content: input.content,
           slug,
+          keywords: input.keywords,
           createdById: ctx.session.user.id,
         },
       });

@@ -127,6 +127,25 @@ export function PostForm({ data }: { data?: z.infer<typeof formSchema> }) {
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name="keywords"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Keywords</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="technology,blog posting,wholesome"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription>
+                Insert keywords of your post separated by commas.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <div className="flex justify-end gap-2">
           {data?.id && (
             <AlertDialog>

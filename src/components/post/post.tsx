@@ -8,8 +8,10 @@ import type { BlogPosting, WithContext } from "schema-dts";
 
 export default function Post({
   data,
+  blog,
 }: {
   data: Exclude<RouterOutputs["post"]["get"], null>;
+  blog: { name: string; language: string };
 }) {
   const jsonLd: WithContext<BlogPosting> = {
     "@context": "https://schema.org",
@@ -23,7 +25,7 @@ export default function Post({
     wordCount: data.content.split(" ").length,
     datePublished: data.createdAt.toISOString(),
     dateModified: data.updatedAt?.toISOString(),
-    description: "Blog post on ABC Blog",
+    description: `Blog post about ${data.keywords} on ${blog.language}`,
     articleBody: data.content,
     author: {
       "@type": "Person",
@@ -33,9 +35,10 @@ export default function Post({
       "@type": "Person",
       name: data.createdBy.name,
     },
-    inLanguage: "en-US",
+    inLanguage: blog.language,
     genre: "blog",
-    articleSection: "Uncategorized",
+    keywords: data.keywords as string,
+    articleSection: data.yearAndMonthCreatedAt,
     url: process.env.NEXTAUTH_URL + "/posts/" + data.slug,
   };
 

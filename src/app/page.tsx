@@ -1,12 +1,11 @@
 import { PostList } from "@/components/post/post-list";
-import { getServerAuthSession } from "@/server/auth";
+import { Spinner } from "@/components/ui/spinner";
+import { Suspense } from "react";
 
 export default async function Home() {
-  const session = await getServerAuthSession();
-
   return (
-    <>
+    <Suspense fallback={<Spinner />}>
       <PostList href="/posts" />
-    </>
+    </Suspense>
   );
 }

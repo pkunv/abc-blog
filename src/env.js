@@ -24,6 +24,8 @@ export const env = createEnv({
     ),
     ADMIN_USERNAME: z.string(),
     ADMIN_PASSWORD: z.string(),
+    BLOG_LANGUAGE: z.string().default("en-US"),
+    BLOG_NAME: z.string().default("ABC Blog"),
   },
 
   /**
@@ -46,6 +48,8 @@ export const env = createEnv({
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     ADMIN_USERNAME: process.env.ADMIN_USERNAME,
     ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
+    BLOG_LANGUAGE: process.env.BLOG_LANGUAGE,
+    BLOG_NAME: process.env.BLOG_NAME,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
