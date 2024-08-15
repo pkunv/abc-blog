@@ -1,3 +1,4 @@
+import { PostEmptyList } from "@/components/post/post-empty-list";
 import { TypographyH3, TypographyMuted } from "@/components/ui/typography";
 import { api } from "@/trpc/server";
 import Link from "next/link";
@@ -27,6 +28,7 @@ export async function PostList({ href }: { href: "/dashboard" | "/posts" }) {
           </div>
         </Link>
       ))}
+      {posts.length === 0 && <PostEmptyList />}
     </div>
   );
 }
