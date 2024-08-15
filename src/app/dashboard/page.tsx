@@ -11,6 +11,7 @@ export default async function DashboardPage() {
         Create a new post
       </TypographyH2>
       <PostForm />
+      <TypographyH2 className="w-full text-left">Posts</TypographyH2>
       <Suspense fallback={<Spinner />}>
         <PostList href="/dashboard" />
       </Suspense>

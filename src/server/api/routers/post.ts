@@ -21,19 +21,24 @@ function convertTitleToSlug(title: string) {
 }
 
 export const postRouter = createTRPCRouter({
+  getCategories: publicProcedure.query(async ({ ctx }) => {
+    return ctx.db.post.findMany({
+      select: { category: true },
+      distinct: ["category"],
+      orderBy: { category: "desc" },
+    });
+  }),
   get: publicProcedure
     .input(
       z.object({
         id: z.number().optional(),
         slug: z.string().optional(),
-        latest: z.boolean().optional(),
       }),
     )
     .query(async ({ input, ctx }) => {
       const post = await ctx.db.post.findFirst({
         include: postInclude,
         where: { id: input.id, slug: input.slug },
-        take: input.latest ? 1 : undefined,
         orderBy: { createdAt: "desc" },
       });
       if (post) {
@@ -49,12 +54,14 @@ export const postRouter = createTRPCRouter({
     .input(
       z.object({
         orderBy: z.enum(["desc", "asc"]).default("desc"),
+        category: z.string().optional(),
         take: z.number().optional(),
       }),
     )
     .query(async ({ input, ctx }) => {
       return ctx.db.post.findMany({
         include: postInclude,
+        where: { category: input.category },
         orderBy: { createdAt: input.orderBy },
         take: input.take,
       });
@@ -69,6 +76,8 @@ export const postRouter = createTRPCRouter({
         slug = `${slug}-1`;
       }
 
+      const category = new Date().toISOString().split("T")[0]!.slice(0, 7);
+
       return ctx.db.post.create({
         data: {
           title: input.title,
@@ -76,6 +85,7 @@ export const postRouter = createTRPCRouter({
           slug,
           keywords: input.keywords,
           createdById: ctx.session.user.id,
+          category: input.category ?? category,
         },
       });
     }),

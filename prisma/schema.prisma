@@ -28,6 +28,7 @@ model Post {
     keywords  String
     views     Int      @default(0)
     createdAt DateTime @default(now())
+    category  String
     updatedAt DateTime @updatedAt
 
     createdBy   User   @relation(fields: [createdById], references: [id])

@@ -7,7 +7,7 @@ import { api } from "@/trpc/server";
 import { Suspense } from "react";
 
 export default async function Home() {
-  const post = await api.post.get({ latest: true });
+  const post = await api.post.get({});
 
   return (
     <>
@@ -17,6 +17,7 @@ export default async function Home() {
           <Post post={post} blog={blogProps} />
         </>
       )}
+      <TypographyH2 className="w-full text-left">Posts</TypographyH2>
       <Suspense fallback={<Spinner />}>
         <PostList href="/posts" />
       </Suspense>

@@ -46,6 +46,7 @@ export function PostForm({ data }: { data?: z.infer<typeof formSchema> }) {
       title: data?.title ?? "",
       content: data?.content ?? "",
       keywords: data?.keywords ?? "",
+      category: data?.category ?? new Date().toISOString().slice(0, 7),
     },
   });
 
@@ -142,6 +143,22 @@ export function PostForm({ data }: { data?: z.infer<typeof formSchema> }) {
               </FormControl>
               <FormDescription>
                 Insert keywords of your post separated by commas.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="category"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Category</FormLabel>
+              <FormControl>
+                <Input placeholder="Special or 2024-12" {...field} />
+              </FormControl>
+              <FormDescription>
+                Previously unused category will attach to your blog navigation.
               </FormDescription>
               <FormMessage />
             </FormItem>

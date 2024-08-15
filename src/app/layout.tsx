@@ -4,6 +4,7 @@ import { GeistMono } from "geist/font/mono";
 import { type Metadata } from "next";
 
 import { Footer } from "@/components/footer/footer";
+import { Categories } from "@/components/header/categories";
 import { Header } from "@/components/header/header";
 import { BackSection } from "@/components/ui/back-section";
 import { Toaster } from "@/components/ui/sonner";
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const theme = env.BLOG_THEME;
   return (
     <html
       lang="en"
@@ -30,11 +32,12 @@ export default function RootLayout({
         <TRPCReactProvider>
           <ThemeProvider
             attribute="class"
-            defaultTheme={env.BLOG_THEME}
+            defaultTheme={theme}
             disableTransitionOnChange
           >
             <Toaster />
             <Header />
+            <Categories />
             <BackSection />
             <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col items-center justify-start gap-2 p-4">
               {children}
