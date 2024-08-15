@@ -1,5 +1,5 @@
 import Post from "@/components/post/post";
-import { env } from "@/env";
+import { blogProps } from "@/lib/getBlogProps";
 import { api } from "@/trpc/server";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -26,7 +26,7 @@ export async function generateMetadata({
       description: post.content,
       type: "article",
       publishedTime: post.createdAt.toISOString(),
-      authors: post.createdBy.name,
+      authors: blogProps.author,
     },
   } as Metadata;
 }
@@ -38,10 +38,6 @@ export default async function PostPage({
 }) {
   const post = await api.post.get({ slug: params.slug });
   if (post === null) notFound();
-  const blog = {
-    name: env.BLOG_NAME,
-    language: env.BLOG_LANGUAGE,
-  };
 
-  return <Post data={post} blog={blog} />;
+  return <Post post={post} blog={blogProps} />;
 }

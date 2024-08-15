@@ -30,6 +30,7 @@ export const env = createEnv({
     BLOG_DESCRIPTION: z
       .string()
       .default("Simple markdown blog with admin panel."),
+    BLOG_AUTHOR: z.string().default("Kunv"),
   },
 
   /**
@@ -56,6 +57,7 @@ export const env = createEnv({
     BLOG_NAME: process.env.BLOG_NAME,
     BLOG_THEME: process.env.BLOG_THEME,
     BLOG_DESCRIPTION: process.env.BLOG_DESCRIPTION,
+    BLOG_AUTHOR: process.env.BLOG_AUTHOR,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

@@ -8,39 +8,39 @@ import { format } from "date-fns";
 import type { BlogPosting, WithContext } from "schema-dts";
 
 export default function Post({
-  data,
+  post,
   blog,
 }: {
-  data: Exclude<RouterOutputs["post"]["get"], null>;
-  blog: { name: string; language: string };
+  post: Exclude<RouterOutputs["post"]["get"], null>;
+  blog: { name: string; language: string; author: string };
 }) {
   const jsonLd: WithContext<BlogPosting> = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    headline: data.title,
+    headline: post.title,
     alternativeHeadline:
-      data.title.length > 24
-        ? data.title.split(" ").slice(0, 5).join(" ")
-        : data.title,
-    editor: data.createdBy.name,
-    wordCount: data.content.length,
-    datePublished: data.createdAt.toISOString(),
-    dateModified: data.updatedAt?.toISOString(),
-    description: `Blog post about ${data.keywords} on ${blog.name}`,
-    articleBody: data.content,
+      post.title.length > 24
+        ? post.title.split(" ").slice(0, 5).join(" ")
+        : post.title,
+    editor: blog.author,
+    wordCount: post.content.length,
+    datePublished: post.createdAt.toISOString(),
+    dateModified: post.updatedAt?.toISOString(),
+    description: `Blog post about ${post.keywords} on ${blog.name}`,
+    articleBody: post.content,
     author: {
       "@type": "Person",
-      name: data.createdBy.name,
+      name: blog.author,
     },
     creator: {
       "@type": "Person",
-      name: data.createdBy.name,
+      name: blog.author,
     },
     inLanguage: blog.language,
     genre: "blog",
-    keywords: data.keywords,
-    articleSection: data.yearAndMonthCreatedAt,
-    url: process.env.NEXTAUTH_URL + "/posts/" + data.slug,
+    keywords: post.keywords,
+    articleSection: post.yearAndMonthCreatedAt,
+    url: process.env.NEXTAUTH_URL + "/posts/" + post.slug,
   };
 
   return (
@@ -52,10 +52,10 @@ export default function Post({
         />
       </section>
       <article className="w-full text-left">
-        <TypographyH1>{data.title}</TypographyH1>
-        <TypographyP>{data.content}</TypographyP>
+        <TypographyH1>{post.title}</TypographyH1>
+        <TypographyP>{post.content}</TypographyP>
         <TypographyMuted>
-          {format(data.createdAt, "PP")} • {data.views} views
+          {format(post.createdAt, "PP")} • {post.views} views
         </TypographyMuted>
       </article>
     </>
