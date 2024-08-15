@@ -37,7 +37,7 @@ export default function Post({
     },
     inLanguage: blog.language,
     genre: "blog",
-    keywords: data.keywords as string,
+    keywords: data.keywords,
     articleSection: data.yearAndMonthCreatedAt,
     url: process.env.NEXTAUTH_URL + "/posts/" + data.slug,
   };

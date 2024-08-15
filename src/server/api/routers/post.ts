@@ -22,11 +22,19 @@ function convertTitleToSlug(title: string) {
 
 export const postRouter = createTRPCRouter({
   get: publicProcedure
-    .input(z.object({ id: z.number().optional(), slug: z.string().optional() }))
+    .input(
+      z.object({
+        id: z.number().optional(),
+        slug: z.string().optional(),
+        latest: z.boolean().optional(),
+      }),
+    )
     .query(async ({ input, ctx }) => {
       return ctx.db.post.findFirst({
         include: postInclude,
         where: { id: input.id, slug: input.slug },
+        take: input.latest ? 1 : undefined,
+        orderBy: { createdAt: "desc" },
       });
     }),
   getMany: publicProcedure
