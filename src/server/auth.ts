@@ -58,6 +58,9 @@ export const authOptions: NextAuthOptions = {
         id: token.sub,
       },
     }),
+    async redirect({ url, baseUrl }) {
+      return "/";
+    },
   },
   adapter: PrismaAdapter(db) as Adapter,
   providers: [
