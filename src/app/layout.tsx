@@ -4,6 +4,7 @@ import { GeistMono } from "geist/font/mono";
 import { type Metadata } from "next";
 
 import { Header } from "@/components/header/header";
+import { BackSection } from "@/components/ui/back-section";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { TRPCReactProvider } from "@/trpc/react";
@@ -18,7 +19,11 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${GeistMono.variable}`}>
+    <html
+      lang="en"
+      className={`${GeistMono.variable}`}
+      suppressHydrationWarning
+    >
       <body>
         <TRPCReactProvider>
           <ThemeProvider
@@ -29,7 +34,8 @@ export default function RootLayout({
           >
             <Toaster />
             <Header />
-            <main className="mx-auto flex w-full max-w-2xl flex-col items-center justify-center gap-2 p-2">
+            <BackSection />
+            <main className="mx-auto flex w-full max-w-2xl flex-col items-center justify-center gap-2 p-4">
               {children}
             </main>
           </ThemeProvider>

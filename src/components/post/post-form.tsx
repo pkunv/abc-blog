@@ -45,6 +45,7 @@ export function PostForm({ data }: { data?: z.infer<typeof formSchema> }) {
       id: data?.id ?? undefined,
       title: data?.title ?? "",
       content: data?.content ?? "",
+      keywords: data?.keywords ?? "",
     },
   });
 
