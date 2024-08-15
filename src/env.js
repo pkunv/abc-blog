@@ -26,6 +26,10 @@ export const env = createEnv({
     ADMIN_PASSWORD: z.string(),
     BLOG_LANGUAGE: z.string().default("en-US"),
     BLOG_NAME: z.string().default("ABC Blog"),
+    BLOG_THEME: z.string().default("dark"),
+    BLOG_DESCRIPTION: z
+      .string()
+      .default("Simple markdown blog with admin panel."),
   },
 
   /**
@@ -50,6 +54,8 @@ export const env = createEnv({
     ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
     BLOG_LANGUAGE: process.env.BLOG_LANGUAGE,
     BLOG_NAME: process.env.BLOG_NAME,
+    BLOG_THEME: process.env.BLOG_THEME,
+    BLOG_DESCRIPTION: process.env.BLOG_DESCRIPTION,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

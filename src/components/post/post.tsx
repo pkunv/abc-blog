@@ -4,6 +4,7 @@ import {
   TypographyP,
 } from "@/components/ui/typography";
 import type { RouterOutputs } from "@/trpc/react";
+import { format } from "date-fns";
 import type { BlogPosting, WithContext } from "schema-dts";
 
 export default function Post({
@@ -54,7 +55,7 @@ export default function Post({
         <TypographyH1>{data.title}</TypographyH1>
         <TypographyP>{data.content}</TypographyP>
         <TypographyMuted>
-          {data.createdAt.toLocaleDateString()} • {data.views} views
+          {format(data.createdAt, "PP")} • {data.views} views
         </TypographyMuted>
       </article>
     </>

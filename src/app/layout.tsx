@@ -7,11 +7,12 @@ import { Header } from "@/components/header/header";
 import { BackSection } from "@/components/ui/back-section";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/ui/theme-provider";
+import { env } from "@/env";
 import { TRPCReactProvider } from "@/trpc/react";
 
 export const metadata: Metadata = {
-  title: "ABC Blog",
-  description: "Simple markdown blog with admin panel.",
+  title: env.BLOG_NAME,
+  description: env.BLOG_DESCRIPTION,
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
@@ -28,8 +29,7 @@ export default function RootLayout({
         <TRPCReactProvider>
           <ThemeProvider
             attribute="class"
-            defaultTheme="dark"
-            enableSystem
+            defaultTheme={env.BLOG_THEME}
             disableTransitionOnChange
           >
             <Toaster />

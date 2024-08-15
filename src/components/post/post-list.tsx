@@ -5,6 +5,7 @@ import {
   TypographyMuted,
 } from "@/components/ui/typography";
 import { api } from "@/trpc/server";
+import { format } from "date-fns";
 import Link from "next/link";
 
 export async function PostList({ href }: { href: "/dashboard" | "/posts" }) {
@@ -28,9 +29,7 @@ export async function PostList({ href }: { href: "/dashboard" | "/posts" }) {
                 {post.content}
               </TypographyMuted>
               <TypographyMuted>•</TypographyMuted>
-              <TypographyMuted>
-                {new Date(post.createdAt).toLocaleDateString()}
-              </TypographyMuted>
+              <TypographyMuted>{format(post.createdAt, "PP")}</TypographyMuted>
             </div>
           </Link>
         ))}
