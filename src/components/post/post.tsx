@@ -1,3 +1,4 @@
+import { CollectImpression } from "@/components/post/collect-impression";
 import {
   TypographyH1,
   TypographyMuted,
@@ -39,13 +40,14 @@ export default function Post({
     inLanguage: blog.language,
     genre: "blog",
     keywords: post.keywords,
-    articleSection: post.yearAndMonthCreatedAt,
+    articleSection: post.category,
     url: process.env.NEXTAUTH_URL + "/posts/" + post.slug,
   };
 
   return (
     <>
       <section>
+        <CollectImpression postId={post.id} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

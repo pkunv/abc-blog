@@ -27,6 +27,7 @@ model Post {
     content   String
     keywords  String
     views     Int      @default(0)
+    reads     Int      @default(0)
     createdAt DateTime @default(now())
     category  String
     updatedAt DateTime @updatedAt

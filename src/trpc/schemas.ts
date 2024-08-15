@@ -6,4 +6,6 @@ export const postSchema = z.object({
   content: z.string().min(3),
   keywords: z.string().max(255),
   category: z.string().max(16).optional(),
+  views: z.number().optional(),
+  reads: z.number().optional(),
 });

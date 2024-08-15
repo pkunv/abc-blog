@@ -28,10 +28,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
+import { TypographySmall } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import { api } from "@/trpc/react";
 import { postSchema } from "@/trpc/schemas";
-import { Trash2 } from "lucide-react";
+import { Eye, SquareChartGantt, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -164,47 +165,65 @@ export function PostForm({ data }: { data?: z.infer<typeof formSchema> }) {
             </FormItem>
           )}
         />
-        <div className="flex justify-end gap-2">
-          {data?.id && (
-            <AlertDialog>
-              <AlertDialogTrigger
-                type="button"
-                className={cn(buttonVariants({ variant: "ghost" }))}
-              >
-                <Trash2 />
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    This action cannot be undone. This will permanently delete
-                    your post.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction
-                    onClick={() => {
-                      if (data.id) deletePost.mutate({ id: data.id });
-                    }}
-                  >
-                    {deletePost.isPending ? (
-                      <Spinner className="grayscale invert" />
-                    ) : (
-                      "Delete"
-                    )}
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-          )}
-          <Button type="submit">
-            {createPost.isPending || updatePost.isPending ? (
-              <Spinner className="grayscale invert" />
-            ) : (
-              "Submit"
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex min-w-8 flex-col items-center gap-2">
+            {data && (
+              <>
+                <div className="flex items-center gap-2">
+                  <Eye />
+                  <TypographySmall>{data.views} views</TypographySmall>
+                </div>
+                <div className="flex items-center gap-2">
+                  <SquareChartGantt />
+                  <TypographySmall>{data.reads} reads</TypographySmall>
+                </div>
+              </>
             )}
-          </Button>
+          </div>
+          <div className="flex">
+            {data?.id && (
+              <AlertDialog>
+                <AlertDialogTrigger
+                  type="button"
+                  className={cn(buttonVariants({ variant: "ghost" }))}
+                >
+                  <Trash2 />
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Are you absolutely sure?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone. This will permanently delete
+                      your post.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={() => {
+                        if (data.id) deletePost.mutate({ id: data.id });
+                      }}
+                    >
+                      {deletePost.isPending ? (
+                        <Spinner className="grayscale invert" />
+                      ) : (
+                        "Delete"
+                      )}
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            )}
+            <Button type="submit">
+              {createPost.isPending || updatePost.isPending ? (
+                <Spinner className="grayscale invert" />
+              ) : (
+                "Submit"
+              )}
+            </Button>
+          </div>
         </div>
       </form>
     </Form>

@@ -36,19 +36,11 @@ export const postRouter = createTRPCRouter({
       }),
     )
     .query(async ({ input, ctx }) => {
-      const post = await ctx.db.post.findFirst({
+      return await ctx.db.post.findFirst({
         include: postInclude,
         where: { id: input.id, slug: input.slug },
         orderBy: { createdAt: "desc" },
       });
-      if (post) {
-        await ctx.db.post.update({
-          where: { id: post.id },
-          data: { views: { increment: 1 } },
-        });
-      }
-
-      return post;
     }),
   getMany: publicProcedure
     .input(
@@ -118,5 +110,16 @@ export const postRouter = createTRPCRouter({
     .input(z.object({ id: z.number() }))
     .mutation(async ({ input, ctx }) => {
       return ctx.db.post.delete({ where: { id: input.id } });
+    }),
+  collectImpression: publicProcedure
+    .input(z.object({ postId: z.number(), type: z.enum(["view", "read"]) }))
+    .mutation(async ({ input, ctx }) => {
+      return ctx.db.post.update({
+        where: { id: input.postId },
+        data:
+          input.type === "view"
+            ? { views: { increment: 1 } }
+            : { reads: { increment: 1 } },
+      });
     }),
 });
