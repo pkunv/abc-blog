@@ -51,9 +51,11 @@ export default function Post({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </section>
-      <article className="w-full text-left">
+      <article className="flex w-full flex-col gap-2 text-left">
         <TypographyH1>{post.title}</TypographyH1>
-        <TypographyP>{post.content}</TypographyP>
+        <TypographyP className="whitespace-pre-wrap">
+          {post.content}
+        </TypographyP>
         <TypographyMuted>
           {format(post.createdAt, "PP")} • {post.views} views
         </TypographyMuted>

@@ -17,6 +17,7 @@ export async function PostList({ href }: { href: "/dashboard" | "/posts" }) {
       <div className="flex w-full flex-col gap-2">
         {posts.map((post) => (
           <Link
+            scroll={false}
             key={post.id}
             href={`${href}/${post.slug}`}
             className={

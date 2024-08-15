@@ -27,7 +27,10 @@ export function BackSection() {
   if (pathname === "/") return null;
   return (
     <div className="mx-auto flex w-full max-w-2xl flex-row items-center justify-stretch gap-2 py-2">
-      <Button onClick={() => router.back()} variant={"ghost"}>
+      <Button
+        onClick={() => router.push("/", { scroll: false })}
+        variant={"ghost"}
+      >
         <ChevronLeft />
       </Button>
       <Breadcrumb>

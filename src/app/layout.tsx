@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import { GeistMono } from "geist/font/mono";
 import { type Metadata } from "next";
 
+import { Footer } from "@/components/footer/footer";
 import { Header } from "@/components/header/header";
 import { BackSection } from "@/components/ui/back-section";
 import { Toaster } from "@/components/ui/sonner";
@@ -25,7 +26,7 @@ export default function RootLayout({
       className={`${GeistMono.variable}`}
       suppressHydrationWarning
     >
-      <body>
+      <body className="flex h-full min-h-dvh flex-col">
         <TRPCReactProvider>
           <ThemeProvider
             attribute="class"
@@ -35,9 +36,10 @@ export default function RootLayout({
             <Toaster />
             <Header />
             <BackSection />
-            <main className="mx-auto flex w-full max-w-2xl flex-col items-center justify-center gap-2 p-4">
+            <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col items-center justify-start gap-2 p-4">
               {children}
             </main>
+            <Footer />
           </ThemeProvider>
         </TRPCReactProvider>
       </body>
