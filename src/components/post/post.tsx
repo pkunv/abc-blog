@@ -53,7 +53,9 @@ export default function Post({
       <article className="w-full text-left">
         <TypographyH1>{data.title}</TypographyH1>
         <TypographyP>{data.content}</TypographyP>
-        <TypographyMuted>{data.createdAt.toLocaleDateString()}</TypographyMuted>
+        <TypographyMuted>
+          {data.createdAt.toLocaleDateString()} • {data.views} views
+        </TypographyMuted>
       </article>
     </>
   );

@@ -30,12 +30,20 @@ export const postRouter = createTRPCRouter({
       }),
     )
     .query(async ({ input, ctx }) => {
-      return ctx.db.post.findFirst({
+      const post = await ctx.db.post.findFirst({
         include: postInclude,
         where: { id: input.id, slug: input.slug },
         take: input.latest ? 1 : undefined,
         orderBy: { createdAt: "desc" },
       });
+      if (post) {
+        await ctx.db.post.update({
+          where: { id: post.id },
+          data: { views: { increment: 1 } },
+        });
+      }
+
+      return post;
     }),
   getMany: publicProcedure
     .input(
