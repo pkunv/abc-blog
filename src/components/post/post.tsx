@@ -1,9 +1,6 @@
 import { CollectImpression } from "@/components/post/collect-impression";
-import {
-  TypographyH1,
-  TypographyMuted,
-  TypographyP,
-} from "@/components/ui/typography";
+import { TypographyH1, TypographyMuted } from "@/components/ui/typography";
+import { fromJSONToPlate, serialize } from "@/lib/plate";
 import type { RouterOutputs } from "@/trpc/react";
 import { format } from "date-fns";
 import type { BlogPosting, WithContext } from "schema-dts";
@@ -55,9 +52,8 @@ export default function Post({
       </section>
       <article className="flex w-full flex-col gap-2 text-left">
         <TypographyH1>{post.title}</TypographyH1>
-        <TypographyP className="whitespace-pre-wrap">
-          {post.content}
-        </TypographyP>
+        {fromJSONToPlate(post.content)?.map((node) => serialize(node))}
+
         <TypographyMuted>
           {format(post.createdAt, "PP")} • {post.views} views
         </TypographyMuted>

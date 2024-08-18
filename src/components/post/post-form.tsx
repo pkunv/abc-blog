@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { type z } from "zod";
 
+import { PlateEditor } from "@/components/plate-ui/plate-editor";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -27,8 +28,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
-import { Textarea } from "@/components/ui/textarea";
 import { TypographySmall } from "@/components/ui/typography";
+import { fromJSONToPlate } from "@/lib/plate";
 import { cn } from "@/lib/utils";
 import { api } from "@/trpc/react";
 import { postSchema } from "@/trpc/schemas";
@@ -119,13 +120,14 @@ export function PostForm({ data }: { data?: z.infer<typeof formSchema> }) {
             <FormItem>
               <FormLabel>Content</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Powerful words & thoughtful insights go here..."
-                  className="h-28 resize-y"
-                  {...field}
+                <PlateEditor
+                  onChange={field.onChange}
+                  initialValue={fromJSONToPlate(field.value)}
                 />
               </FormControl>
-              <FormDescription>You can use markdown.</FormDescription>
+              <FormDescription>
+                You can append images by copy-pasting them.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}

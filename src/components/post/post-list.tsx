@@ -1,5 +1,6 @@
 import { PostEmptyList } from "@/components/post/post-empty-list";
 import { TypographyH3, TypographyMuted } from "@/components/ui/typography";
+import { fromJSONToPlainText } from "@/lib/plate";
 import { api } from "@/trpc/server";
 import { format } from "date-fns";
 import Link from "next/link";
@@ -27,7 +28,7 @@ export async function PostList({
           <TypographyH3>{post.title}</TypographyH3>
           <div className="flex w-full gap-2">
             <TypographyMuted className="w-24 truncate">
-              {post.content}
+              {fromJSONToPlainText(post.content)}
             </TypographyMuted>
             <TypographyMuted>•</TypographyMuted>
             <TypographyMuted>{format(post.createdAt, "PP")}</TypographyMuted>
