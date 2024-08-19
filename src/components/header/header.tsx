@@ -1,5 +1,6 @@
 import { AppLogo } from "@/components/header/app-logo";
 import { HeaderMenu } from "@/components/header/header-menu";
+import { SearchBar } from "@/components/header/search-bar";
 import { getServerAuthSession } from "@/server/auth";
 
 export async function Header() {
@@ -20,6 +21,7 @@ export async function Header() {
   return (
     <header className="mx-auto flex w-full flex-col items-center justify-between gap-2 p-2 sm:flex-row">
       <AppLogo />
+      <SearchBar />
       <HeaderMenu links={links} />
     </header>
   );

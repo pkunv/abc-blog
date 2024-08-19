@@ -74,6 +74,7 @@ export const postRouter = createTRPCRouter({
         category: z.string().optional(),
         take: z.number().optional(),
         contentPreview: z.boolean().default(false),
+        q: z.string().optional(),
       }),
     )
     .query(async ({ input, ctx }) => {
@@ -81,7 +82,6 @@ export const postRouter = createTRPCRouter({
         select: {
           id: true,
           title: true,
-          content: input.contentPreview ? false : true,
           contentPreview: input.contentPreview ? true : false,
           slug: true,
           category: true,
@@ -90,7 +90,13 @@ export const postRouter = createTRPCRouter({
           reads: true,
           views: true,
         },
-        where: { category: input.category },
+        where: {
+          category: input.category,
+          OR: [
+            { content: { contains: input.q, mode: "insensitive" } },
+            { title: { contains: input.q, mode: "insensitive" } },
+          ],
+        },
         orderBy: { createdAt: input.orderBy },
         take: input.take,
       });

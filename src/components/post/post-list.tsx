@@ -7,11 +7,13 @@ import Link from "next/link";
 export async function PostList({
   href,
   category,
+  q,
 }: {
   href: "/dashboard" | "/posts";
   category?: string;
+  q?: string;
 }) {
-  const posts = await api.post.getMany({ category, contentPreview: true });
+  const posts = await api.post.getMany({ category, contentPreview: true, q });
 
   return (
     <div className="flex w-full flex-col gap-2">
