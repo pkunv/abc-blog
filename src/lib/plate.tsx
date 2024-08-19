@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { TypographyH3, TypographyP } from "@/components/ui/typography";
+import { TypographyH4, TypographyP } from "@/components/ui/typography";
 import { type PlateProps } from "@udecode/plate-common";
 
 import escapeHtml from "escape-html";
@@ -59,18 +59,18 @@ export const SerializedPlateElement = ({
   switch (node.type) {
     case "h1":
       return (
-        <h1 className="scroll-m-20 text-3xl font-extrabold tracking-tight">
-          {children}
-        </h1>
-      );
-    case "h2":
-      return (
-        <h2 className="scroll-m-20 pb-2 text-2xl font-semibold tracking-tight first:mt-0">
+        <h2 className="scroll-m-20 text-3xl font-extrabold tracking-tight">
           {children}
         </h2>
       );
+    case "h2":
+      return (
+        <h3 className="scroll-m-20 pb-2 text-2xl font-semibold tracking-tight first:mt-0">
+          {children}
+        </h3>
+      );
     case "h3":
-      return <TypographyH3>{children}</TypographyH3>;
+      return <TypographyH4>{children}</TypographyH4>;
     case "code":
       return <code>{children}</code>;
     case "blockquote":

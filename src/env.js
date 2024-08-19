@@ -31,7 +31,7 @@ export const env = createEnv({
       .string()
       .default("Simple markdown blog with admin panel."),
     BLOG_AUTHOR: z.string().default("Kunv"),
-    BLOG_KEYWORDS: z.string(),
+    BLOG_KEYWORDS: z.string().default("blog, markdown, admin, panel"),
   },
 
   /**

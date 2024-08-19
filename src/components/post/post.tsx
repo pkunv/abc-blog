@@ -1,6 +1,10 @@
 import { CollectImpression } from "@/components/post/collect-impression";
 import { TypographyH1, TypographyMuted } from "@/components/ui/typography";
-import { fromJSONToPlate, SerializedPlateElement } from "@/lib/plate";
+import {
+  fromJSONToPlainText,
+  fromJSONToPlate,
+  SerializedPlateElement,
+} from "@/lib/plate";
 import type { RouterOutputs } from "@/trpc/react";
 import { format } from "date-fns";
 import type { BlogPosting, WithContext } from "schema-dts";
@@ -21,11 +25,11 @@ export default function Post({
         ? post.title.split(" ").slice(0, 5).join(" ")
         : post.title,
     editor: blog.author,
-    wordCount: post.content.length,
+    wordCount: fromJSONToPlainText(post.content).length,
     datePublished: post.createdAt.toISOString(),
     dateModified: post.updatedAt?.toISOString(),
     description: `Blog post about ${post.keywords} on ${blog.name}`,
-    articleBody: post.content,
+    articleBody: fromJSONToPlainText(post.content),
     author: {
       "@type": "Person",
       name: blog.author,

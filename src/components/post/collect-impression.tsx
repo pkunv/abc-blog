@@ -5,21 +5,41 @@ import { useEffect, useRef, useState } from "react";
 
 export function CollectImpression({ postId }: { postId: number }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const [impression, setImpression] = useState({
+    visible: false,
+    checkpoint: "view",
+    finished: false,
+  });
 
-  const collectImpression = api.post.collectImpression.useMutation();
+  const collectImpression = api.post.collectImpression.useMutation({
+    onSuccess: () => {
+      setImpression((prev) => {
+        if (prev.checkpoint === "view") {
+          return { ...prev, checkpoint: "read" };
+        } else {
+          return { ...prev, finished: true };
+        }
+      });
+    },
+  });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry) {
-          setIsVisible(entry.isIntersecting);
+          setImpression((prev) => {
+            return {
+              visible: entry.isIntersecting,
+              checkpoint: prev.checkpoint,
+              finished: prev.finished,
+            };
+          });
         }
       },
       {
         root: null, // viewport
         rootMargin: "0px", // no margin
-        threshold: 0.5, // 50% of target visible
+        threshold: 0.8, // 50% of target visible
       },
     );
 
@@ -36,12 +56,16 @@ export function CollectImpression({ postId }: { postId: number }) {
   }, []);
 
   useEffect(() => {
-    if (isVisible) {
+    if (impression.visible && !impression.finished) {
       const viewTimeout = setTimeout(() => {
-        isVisible && collectImpression.mutate({ postId, type: "view" });
+        impression.visible &&
+          impression.checkpoint === "view" &&
+          collectImpression.mutate({ postId, type: "view" });
       }, 500);
       const readTimeout = setTimeout(() => {
-        isVisible && collectImpression.mutate({ postId, type: "read" });
+        impression.visible &&
+          impression.checkpoint === "read" &&
+          collectImpression.mutate({ postId, type: "read" });
       }, 10000);
 
       return () => {
@@ -49,7 +73,7 @@ export function CollectImpression({ postId }: { postId: number }) {
         clearTimeout(readTimeout);
       };
     }
-  }, [isVisible]);
+  }, [impression]);
 
   return <div ref={ref} aria-hidden={true} />;
 }

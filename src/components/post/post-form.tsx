@@ -183,7 +183,7 @@ export function PostForm({ data }: { data?: z.infer<typeof formSchema> }) {
               </>
             )}
           </div>
-          <div className="flex">
+          <div className="flex gap-2">
             {data?.id && (
               <AlertDialog>
                 <AlertDialogTrigger
