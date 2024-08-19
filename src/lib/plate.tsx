@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { TypographyH3, TypographyP } from "@/components/ui/typography";
 import { type PlateProps } from "@udecode/plate-common";
 
@@ -43,6 +45,10 @@ export const SerializedPlateElement = ({
     if (node.superscript) {
       return <sup>{string}</sup>;
     }
+    //@ts-expect-error - not all types are handled
+    if (node.underline) {
+      return <u>{string}</u>;
+    }
     return <>{string}</>;
   }
 
@@ -67,9 +73,9 @@ export const SerializedPlateElement = ({
       return <TypographyH3>{children}</TypographyH3>;
     case "code":
       return <code>{children}</code>;
-    case "quote":
+    case "blockquote":
       return (
-        <blockquote>
+        <blockquote className="border-s-4 bg-primary-foreground p-4 italic">
           <TypographyP>{children}</TypographyP>
         </blockquote>
       );
@@ -85,18 +91,29 @@ export const SerializedPlateElement = ({
       );
     case "img":
       return (
-        <Image
-          // @ts-expect-error - not all types are handled
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-assignment
-          src={node.url}
-          alt="Post image"
-          width="0"
-          height="0"
-          sizes="50vw"
-          className="h-auto w-1/2"
-        />
+        <>
+          <Image
+            // @ts-expect-error - not all types are handled
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-assignment
+            src={node.url}
+            // @ts-expect-error - not all types are handled
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            alt={node.caption ? node.caption[0].text : "Post image"}
+            width="0"
+            height="0"
+            sizes="50vw"
+            className="h-auto w-1/2"
+          />
+          {/* @ts-expect-error - not all types are handled */}
+          {node.caption && (
+            <span className="text-sm text-muted-foreground">
+              {/*  @ts-expect-error - not all types are handled eslint-disable-next-line @typescript-eslint/no-unsafe-member-access */}
+              {node.caption[0].text}
+            </span>
+          )}
+        </>
       );
     default:
-      return children;
+      return <TypographyP>{children}</TypographyP>;
   }
 };
