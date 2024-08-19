@@ -36,13 +36,21 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Toaster />
-            <Header />
-            <Categories />
-            <BackSection />
-            <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col items-center justify-start gap-2 p-4">
-              {children}
-            </main>
-            <Footer />
+            <div className="max-w-screen grid h-screen grid-cols-4">
+              <div className="hidden sm:block"></div>
+              <div className="col-span-full grid h-screen grid-cols-subgrid overflow-y-scroll sm:col-span-3">
+                <div className="col-span-full col-start-1 flex h-fit min-h-screen w-full flex-col items-center justify-start justify-self-center overflow-hidden sm:col-span-2">
+                  <Header />
+                  <Categories />
+                  <BackSection />
+                  <main className="mx-auto flex w-full flex-1 flex-col items-center justify-start gap-2 p-4">
+                    {children}
+                  </main>
+                  <Footer />
+                </div>
+                <Categories />
+              </div>
+            </div>
           </ThemeProvider>
         </TRPCReactProvider>
       </body>

@@ -18,7 +18,7 @@ export async function Header() {
   ].filter((link) => link) as { title: string; href: string }[];
 
   return (
-    <header className="mx-auto flex w-full max-w-2xl flex-col items-center justify-between gap-2 p-2 sm:flex-row">
+    <header className="mx-auto flex w-full flex-col items-center justify-between gap-2 p-2 sm:flex-row">
       <AppLogo />
       <HeaderMenu links={links} />
     </header>

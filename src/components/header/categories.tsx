@@ -8,7 +8,7 @@ export async function Categories() {
   }));
 
   return (
-    <section className="mx-auto flex w-full max-w-2xl flex-col items-center justify-center gap-2 p-2 sm:flex-row">
+    <section className="mx-auto flex w-full flex-col items-center justify-center gap-2 p-2 sm:flex-row">
       <HeaderMenu links={categories} />
     </section>
   );
