@@ -15,9 +15,22 @@ import { TRPCReactProvider } from "@/trpc/react";
 import { api } from "@/trpc/server";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(env.NEXTAUTH_URL),
   title: env.BLOG_NAME,
   description: env.BLOG_DESCRIPTION,
+  keywords: env.BLOG_KEYWORDS,
+  alternates: {
+    canonical: "/",
+  },
   icons: [{ rel: "icon", url: "/favicon.ico" }],
+  openGraph: {
+    title: env.BLOG_NAME,
+    description: env.BLOG_DESCRIPTION,
+    locale: env.BLOG_LANGUAGE,
+    type: "website",
+    siteName: env.BLOG_NAME,
+    url: new URL(env.NEXTAUTH_URL),
+  },
 };
 
 export default async function RootLayout({
