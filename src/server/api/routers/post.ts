@@ -1,3 +1,4 @@
+import { fromJSONToPlainText } from "@/lib/plate";
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -72,11 +73,23 @@ export const postRouter = createTRPCRouter({
         orderBy: z.enum(["desc", "asc"]).default("desc"),
         category: z.string().optional(),
         take: z.number().optional(),
+        contentPreview: z.boolean().default(false),
       }),
     )
     .query(async ({ input, ctx }) => {
       return ctx.db.post.findMany({
-        include: postInclude,
+        select: {
+          id: true,
+          title: true,
+          content: input.contentPreview ? false : true,
+          contentPreview: input.contentPreview ? true : false,
+          slug: true,
+          category: true,
+          createdAt: true,
+          createdBy: true,
+          reads: true,
+          views: true,
+        },
         where: { category: input.category },
         orderBy: { createdAt: input.orderBy },
         take: input.take,
@@ -94,10 +107,13 @@ export const postRouter = createTRPCRouter({
 
       const category = new Date().toISOString().split("T")[0]!.slice(0, 7);
 
+      const contentPreview = fromJSONToPlainText(input.content).slice(0, 50);
+
       return ctx.db.post.create({
         data: {
           title: input.title,
           content: input.content,
+          contentPreview,
           slug,
           keywords: input.keywords,
           createdById: ctx.session.user.id,

@@ -23,16 +23,17 @@ model User {
 }
 
 model Post {
-    id        Int      @id @default(autoincrement())
-    slug      String   @unique
-    title     String
-    content   String
-    keywords  String
-    views     Int      @default(0)
-    reads     Int      @default(0)
-    createdAt DateTime @default(now())
-    category  String
-    updatedAt DateTime @updatedAt
+    id             Int      @id @default(autoincrement())
+    slug           String   @unique
+    title          String
+    content        String
+    contentPreview String
+    keywords       String
+    views          Int      @default(0)
+    reads          Int      @default(0)
+    createdAt      DateTime @default(now())
+    category       String
+    updatedAt      DateTime @updatedAt
 
     createdBy   User   @relation(fields: [createdById], references: [id])
     createdById String

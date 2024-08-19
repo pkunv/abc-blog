@@ -1,6 +1,5 @@
 import { PostEmptyList } from "@/components/post/post-empty-list";
 import { TypographyH3, TypographyMuted } from "@/components/ui/typography";
-import { fromJSONToPlainText } from "@/lib/plate";
 import { api } from "@/trpc/server";
 import { format } from "date-fns";
 import Link from "next/link";
@@ -12,7 +11,7 @@ export async function PostList({
   href: "/dashboard" | "/posts";
   category?: string;
 }) {
-  const posts = await api.post.getMany({ category });
+  const posts = await api.post.getMany({ category, contentPreview: true });
 
   return (
     <div className="flex w-full flex-col gap-2">
@@ -28,7 +27,7 @@ export async function PostList({
           <TypographyH3>{post.title}</TypographyH3>
           <div className="flex w-full gap-2">
             <TypographyMuted className="w-24 truncate">
-              {fromJSONToPlainText(post.content)}
+              {post.contentPreview}
             </TypographyMuted>
             <TypographyMuted>•</TypographyMuted>
             <TypographyMuted>{format(post.createdAt, "PP")}</TypographyMuted>
