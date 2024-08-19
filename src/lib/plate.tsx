@@ -28,17 +28,27 @@ export function fromJSONToPlainText(value: string | undefined | null) {
     : "";
 }
 
-export const SerializedPlateElement = ({node}:{node: Node}): React.ReactNode => {
+export const SerializedPlateElement = ({
+  node,
+}: {
+  node: Node;
+}): React.ReactNode => {
   if (Text.isText(node)) {
     const string = escapeHtml(node.text).replaceAll("&#39;", "'");
     //@ts-expect-error - not all types are handled
     if (node.bold) {
       return <strong className="font-bold">{string}</strong>;
     }
+    //@ts-expect-error - not all types are handled
+    if (node.superscript) {
+      return <sup>{string}</sup>;
+    }
     return <>{string}</>;
   }
 
-  const children = node.children.map((n, index) => <SerializedPlateElement node={n} key={index} />);
+  const children = node.children.map((n, index) => (
+    <SerializedPlateElement node={n} key={index} />
+  ));
   //@ts-expect-error - not all types are handled
   switch (node.type) {
     case "h1":

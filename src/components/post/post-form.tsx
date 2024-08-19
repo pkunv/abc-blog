@@ -68,6 +68,7 @@ export function PostForm({ data }: { data?: z.infer<typeof formSchema> }) {
     onSuccess: (data) => {
       toast.success("Post updated!");
       router.push(`/dashboard/${data.slug}`);
+      router.refresh();
     },
     onError: (error) => {
       toast.error(error.message);

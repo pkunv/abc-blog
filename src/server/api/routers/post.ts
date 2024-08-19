@@ -22,11 +22,35 @@ function convertTitleToSlug(title: string) {
 
 export const postRouter = createTRPCRouter({
   getCategories: publicProcedure.query(async ({ ctx }) => {
-    return ctx.db.post.findMany({
-      select: { category: true },
-      distinct: ["category"],
-      orderBy: { category: "desc" },
-    });
+    return Object.values(
+      (
+        await ctx.db.post.findMany({
+          select: { category: true, title: true, slug: true },
+        })
+      )
+        // group by "category" property
+        .reduce(
+          (acc, post) => {
+            if (!acc[post.category]) {
+              acc[post.category] = {
+                category: post.category,
+                href: `/category/${post.category}`,
+                posts: [],
+              };
+            }
+            acc[post.category]?.posts.push(post);
+            return acc;
+          },
+          {} as Record<
+            string,
+            {
+              category: string;
+              href: string;
+              posts: { category: string; title: string; slug: string }[];
+            }
+          >,
+        ),
+    );
   }),
   get: publicProcedure
     .input(

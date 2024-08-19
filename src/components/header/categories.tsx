@@ -1,15 +1,13 @@
 import { HeaderMenu } from "@/components/header/header-menu";
-import { api } from "@/trpc/server";
 
-export async function Categories() {
-  const categories = (await api.post.getCategories()).map((category) => ({
-    title: category.category,
-    href: `/category/${category.category}`,
-  }));
-
+export function CategoriesHeader({
+  links,
+}: {
+  links: { title: string; href: string }[];
+}) {
   return (
-    <section className="mx-auto flex w-full flex-col items-center justify-center gap-2 p-2 sm:flex-row">
-      <HeaderMenu links={categories} />
+    <section className="mx-auto flex w-full flex-col items-center justify-center gap-2 p-2 sm:hidden sm:flex-row">
+      <HeaderMenu links={links} />
     </section>
   );
 }
