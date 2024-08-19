@@ -1,6 +1,6 @@
 import { CollectImpression } from "@/components/post/collect-impression";
 import { TypographyH1, TypographyMuted } from "@/components/ui/typography";
-import { fromJSONToPlate, serialize } from "@/lib/plate";
+import { fromJSONToPlate, SerializedPlateElement } from "@/lib/plate";
 import type { RouterOutputs } from "@/trpc/react";
 import { format } from "date-fns";
 import type { BlogPosting, WithContext } from "schema-dts";
@@ -50,11 +50,12 @@ export default function Post({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </section>
-      <article className="flex w-full flex-col gap-2 text-left">
-        <TypographyH1>{post.title}</TypographyH1>
-        {fromJSONToPlate(post.content)?.map((node) => serialize(node))}
-
-        <TypographyMuted>
+      <article className="w-full space-y-2 text-left">
+        <TypographyH1 className="mb-4">{post.title}</TypographyH1>
+        {fromJSONToPlate(post.content)?.map((node, index) => (
+          <SerializedPlateElement node={node} key={index} />
+        ))}
+        <TypographyMuted className="mt-4">
           {format(post.createdAt, "PP")} • {post.views} views
         </TypographyMuted>
       </article>
