@@ -13,9 +13,12 @@ export function CategoriesSidebar({
   categories: RouterOutputs["post"]["getCategories"];
 }) {
   return (
-    <aside>
+    <aside className="hidden sm:block">
       <nav className="px-2">
-        <Accordion type="single" collapsible>
+        <Accordion
+          type="multiple"
+          defaultValue={categories.map((category) => category.category)}
+        >
           {categories.map((category) => (
             <AccordionItem key={category.category} value={category.category}>
               <AccordionTrigger className="text-bold">

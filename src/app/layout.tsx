@@ -25,7 +25,7 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const categories = await api.post.getCategories();
 
-  const theme = env.BLOG_THEME;
+  const theme = env.BLOG_THEME === "dark" ? "dark" : "light";
   return (
     <html
       lang="en"
@@ -41,9 +41,9 @@ export default async function RootLayout({
           >
             <Toaster />
             <div className="max-w-screen grid h-screen grid-cols-4">
-              <div className="hidden sm:block"></div>
-              <div className="col-span-full grid h-screen grid-cols-subgrid overflow-x-hidden overflow-y-scroll sm:col-span-3">
-                <div className="col-span-full col-start-1 flex h-fit min-h-screen w-full flex-col items-center justify-start justify-self-center overflow-hidden sm:col-span-2">
+              <div className="hidden xl:block"></div>
+              <div className="col-span-full col-start-1 grid h-screen grid-cols-subgrid overflow-x-hidden overflow-y-scroll xl:col-span-3 xl:col-start-2">
+                <div className="col-span-full col-start-1 flex h-fit min-h-screen w-full flex-col items-center justify-start justify-self-center overflow-hidden sm:col-span-3 xl:col-span-2">
                   <Header />
                   <CategoriesHeader
                     links={categories.map((category) => {
