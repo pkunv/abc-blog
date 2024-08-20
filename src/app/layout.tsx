@@ -11,6 +11,7 @@ import { BackSection } from "@/components/ui/back-section";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { env } from "@/env";
+import { blogProps } from "@/lib/getBlogProps";
 import { TRPCReactProvider } from "@/trpc/react";
 import { api } from "@/trpc/server";
 
@@ -38,7 +39,7 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const categories = await api.post.getCategories();
 
-  const theme = env.BLOG_THEME === "dark" ? "dark" : "light";
+  const theme = blogProps.theme === "dark" ? "dark" : "light";
   return (
     <html
       lang="en"

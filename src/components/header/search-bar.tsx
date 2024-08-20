@@ -21,12 +21,15 @@ export function SearchBar() {
   );
 
   return (
-    <InputWithIcon
-      startIcon={Search}
-      placeholder="Search..."
-      defaultValue={searchParams.get("q") ?? ""}
-      onChange={(e) => handleSearch("q", e.target.value)}
-      type="search"
-    />
+    <div>
+      <InputWithIcon
+        startIcon={Search}
+        placeholder="Search..."
+        className="mx-auto w-96"
+        defaultValue={searchParams.get("q") ?? ""}
+        onChange={(e) => handleSearch("q", e.target.value)}
+        type="search"
+      />
+    </div>
   );
 }
