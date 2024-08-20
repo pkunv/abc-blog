@@ -1,8 +1,9 @@
 import { env } from "@/env";
+import { blogProps } from "@/lib/getBlogProps";
 import { ImageResponse } from "next/og";
 
 // Image metadata
-export const alt = env.BLOG_DESCRIPTION;
+export const alt = blogProps.description;
 export const size = {
   width: 1200,
   height: 630,

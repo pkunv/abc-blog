@@ -35,11 +35,7 @@ import {
   ELEMENT_CODE_LINE,
   ELEMENT_CODE_SYNTAX,
 } from "@udecode/plate-code-block";
-import {
-  CommentsProvider,
-  createCommentsPlugin,
-  MARK_COMMENT,
-} from "@udecode/plate-comments";
+import { createCommentsPlugin, MARK_COMMENT } from "@udecode/plate-comments";
 import {
   createPlugins,
   Plate,
@@ -126,7 +122,6 @@ import { CodeSyntaxLeaf } from "@/components/plate-ui/code-syntax-leaf";
 import { ColumnElement } from "@/components/plate-ui/column-element";
 import { ColumnGroupElement } from "@/components/plate-ui/column-group-element";
 import { CommentLeaf } from "@/components/plate-ui/comment-leaf";
-import { CommentsPopover } from "@/components/plate-ui/comments-popover";
 import { Editor } from "@/components/plate-ui/editor";
 import { ExcalidrawElement } from "@/components/plate-ui/excalidraw-element";
 import { FixedToolbar } from "@/components/plate-ui/fixed-toolbar";
@@ -370,26 +365,23 @@ export function PlateEditor({
   return (
     <TooltipProvider>
       <DndProvider backend={HTML5Backend}>
-        <CommentsProvider users={{}} myUserId="1">
-          <Plate
-            plugins={plugins}
-            initialValue={initialValue}
-            onChange={(newValue) => {
-              onChange(fromPlateToJSON(newValue));
-            }}
-          >
-            <FixedToolbar>
-              <FixedToolbarButtons />
-            </FixedToolbar>
+        <Plate
+          plugins={plugins}
+          initialValue={initialValue}
+          onChange={(newValue) => {
+            onChange(fromPlateToJSON(newValue));
+          }}
+        >
+          <FixedToolbar>
+            <FixedToolbarButtons />
+          </FixedToolbar>
 
-            <Editor className="h-56 resize-y" />
+          <Editor className="h-56 resize-y" />
 
-            <FloatingToolbar>
-              <FloatingToolbarButtons />
-            </FloatingToolbar>
-            <CommentsPopover />
-          </Plate>
-        </CommentsProvider>
+          <FloatingToolbar>
+            <FloatingToolbarButtons />
+          </FloatingToolbar>
+        </Plate>
       </DndProvider>
     </TooltipProvider>
   );

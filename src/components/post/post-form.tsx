@@ -39,7 +39,11 @@ import { toast } from "sonner";
 
 const formSchema = postSchema;
 
-export function PostForm({ data }: { data?: z.infer<typeof formSchema> }) {
+export default function PostForm({
+  data,
+}: {
+  data?: z.infer<typeof formSchema>;
+}) {
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

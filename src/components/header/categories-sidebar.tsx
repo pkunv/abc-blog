@@ -4,6 +4,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { blogProps } from "@/lib/getBlogProps";
+import { isValidDate } from "@/lib/isValidDate";
 import { type RouterOutputs } from "@/trpc/react";
 import Link from "next/link";
 
@@ -22,12 +24,17 @@ export function CategoriesSidebar({
           {categories.map((category) => (
             <AccordionItem key={category.category} value={category.category}>
               <AccordionTrigger className="text-bold">
-                <Link
-                  href={category.href}
-                  className="hover:underline"
-                  target="_blank"
-                >
-                  {category.category}
+                <Link href={category.href} className="hover:underline">
+                  {isValidDate(new Date(category.category)) &&
+                  blogProps.localizeMonths
+                    ? new Date(category.category).toLocaleDateString(
+                        blogProps.language,
+                        {
+                          month: "long",
+                          year: "numeric",
+                        },
+                      )
+                    : category.category}
                 </Link>
               </AccordionTrigger>
               <AccordionContent>

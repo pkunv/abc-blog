@@ -1,7 +1,7 @@
 import { PostEmptyList } from "@/components/post/post-empty-list";
 import { TypographyH3, TypographyMuted } from "@/components/ui/typography";
+import { blogProps } from "@/lib/getBlogProps";
 import { api } from "@/trpc/server";
-import { format } from "date-fns";
 import Link from "next/link";
 
 export async function PostList({
@@ -32,7 +32,14 @@ export async function PostList({
               {post.contentPreview}
             </TypographyMuted>
             <TypographyMuted>•</TypographyMuted>
-            <TypographyMuted>{format(post.createdAt, "PP")}</TypographyMuted>
+            <TypographyMuted>
+              {post.createdAt.toLocaleDateString(blogProps.language, {
+                day: "numeric",
+                weekday: "long",
+                month: "long",
+                year: "numeric",
+              })}
+            </TypographyMuted>
           </div>
         </Link>
       ))}

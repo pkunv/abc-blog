@@ -1,12 +1,12 @@
 import { CollectImpression } from "@/components/post/collect-impression";
 import { TypographyH1, TypographyMuted } from "@/components/ui/typography";
+import { blogProps } from "@/lib/getBlogProps";
 import {
   fromJSONToPlainText,
   fromJSONToPlate,
   SerializedPlateElement,
 } from "@/lib/plate";
 import type { RouterOutputs } from "@/trpc/react";
-import { format } from "date-fns";
 import type { BlogPosting, WithContext } from "schema-dts";
 
 export default function Post({
@@ -60,7 +60,13 @@ export default function Post({
           <SerializedPlateElement node={node} key={index} />
         ))}
         <TypographyMuted className="mt-4">
-          {format(post.createdAt, "PP")} • {post.views} views
+          {post.createdAt.toLocaleDateString(blogProps.language, {
+            day: "numeric",
+            weekday: "long",
+            month: "long",
+            year: "numeric",
+          })}{" "}
+          • {post.views} views
         </TypographyMuted>
       </article>
     </>

@@ -1,5 +1,5 @@
-import { createEnv } from "@t3-oss/env-nextjs";
-import { z } from "zod";
+import { createEnv } from "@t3-oss/env-nextjs"
+import { z } from "zod"
 
 export const env = createEnv({
   /**
@@ -32,6 +32,7 @@ export const env = createEnv({
       .default("Simple markdown blog with admin panel."),
     BLOG_AUTHOR: z.string().default("Kunv"),
     BLOG_KEYWORDS: z.string().default("blog, markdown, admin, panel"),
+    LOCALIZE_MONTHS_BY_LANG: z.preprocess((val) => val === "1" || val === "true", z.boolean()),
   },
 
   /**
@@ -60,6 +61,7 @@ export const env = createEnv({
     BLOG_DESCRIPTION: process.env.BLOG_DESCRIPTION,
     BLOG_AUTHOR: process.env.BLOG_AUTHOR,
     BLOG_KEYWORDS: process.env.BLOG_KEYWORDS,
+    LOCALIZE_MONTHS_BY_LANG: process.env.LOCALIZE_MONTHS_BY_LANG,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
