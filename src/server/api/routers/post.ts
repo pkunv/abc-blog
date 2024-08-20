@@ -92,10 +92,12 @@ export const postRouter = createTRPCRouter({
         },
         where: {
           category: input.category,
-          OR: [
-            { content: { contains: input.q, mode: "insensitive" } },
-            { title: { contains: input.q, mode: "insensitive" } },
-          ],
+          OR: input.q
+            ? [
+                { content: { contains: input.q, mode: "insensitive" } },
+                { title: { contains: input.q, mode: "insensitive" } },
+              ]
+            : undefined,
         },
         orderBy: { createdAt: input.orderBy },
         take: input.take,
