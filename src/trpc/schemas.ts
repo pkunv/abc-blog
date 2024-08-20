@@ -8,4 +8,6 @@ export const postSchema = z.object({
   category: z.string().max(16).optional(),
   views: z.number().optional(),
   reads: z.number().optional(),
+  active: z.boolean().optional(),
+  placement: z.enum(["FEATURED", "ABOUT", "CONTACT", "DEFAULT"]).optional(),
 });

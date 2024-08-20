@@ -8,12 +8,19 @@ export async function PostList({
   href,
   category,
   q,
+  placement,
 }: {
   href: "/dashboard" | "/posts";
   category?: string;
   q?: string;
+  placement?: "DEFAULT" | "ALL";
 }) {
-  const posts = await api.post.getMany({ category, contentPreview: true, q });
+  const posts = await api.post.getMany({
+    category,
+    contentPreview: true,
+    q,
+    placement: placement,
+  });
 
   return (
     <div className="flex w-full flex-col gap-2">

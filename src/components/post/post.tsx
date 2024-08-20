@@ -59,15 +59,17 @@ export default function Post({
         {fromJSONToPlate(post.content)?.map((node, index) => (
           <SerializedPlateElement node={node} key={index} />
         ))}
-        <TypographyMuted className="mt-4">
-          {post.createdAt.toLocaleDateString(blogProps.language, {
-            day: "numeric",
-            weekday: "long",
-            month: "long",
-            year: "numeric",
-          })}{" "}
-          • {post.views} views
-        </TypographyMuted>
+        {post.placement === "DEFAULT" && (
+          <TypographyMuted className="mt-4">
+            {post.createdAt.toLocaleDateString(blogProps.language, {
+              day: "numeric",
+              weekday: "long",
+              month: "long",
+              year: "numeric",
+            })}{" "}
+            • {post.views} views
+          </TypographyMuted>
+        )}
       </article>
     </>
   );

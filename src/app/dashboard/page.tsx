@@ -15,7 +15,7 @@ export default async function DashboardPage() {
       </Suspense>
       <TypographyH2 className="w-full text-left">Posts</TypographyH2>
       <Suspense fallback={<Spinner />}>
-        <PostList href="/dashboard" />
+        <PostList href="/dashboard" placement={"ALL"} />
       </Suspense>
     </>
   );

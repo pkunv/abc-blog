@@ -27,6 +27,7 @@ export const postRouter = createTRPCRouter({
       (
         await ctx.db.post.findMany({
           select: { category: true, title: true, slug: true },
+          where: { active: true, placement: "DEFAULT" },
         })
       )
         // group by "category" property
@@ -58,12 +59,21 @@ export const postRouter = createTRPCRouter({
       z.object({
         id: z.number().optional(),
         slug: z.string().optional(),
+        placement: z
+          .enum(["FEATURED", "ABOUT", "CONTACT", "DEFAULT"])
+          .default("DEFAULT")
+          .nullable(),
       }),
     )
     .query(async ({ input, ctx }) => {
       return await ctx.db.post.findFirst({
         include: postInclude,
-        where: { id: input.id, slug: input.slug },
+        where: {
+          id: input.id,
+          slug: input.slug,
+          active: true,
+          placement: input.placement,
+        },
         orderBy: { createdAt: "desc" },
       });
     }),
@@ -75,6 +85,9 @@ export const postRouter = createTRPCRouter({
         take: z.number().optional(),
         contentPreview: z.boolean().default(false),
         q: z.string().optional(),
+        placement: z
+          .enum(["FEATURED", "ABOUT", "CONTACT", "DEFAULT", "ALL"])
+          .default("DEFAULT"),
       }),
     )
     .query(async ({ input, ctx }) => {
@@ -92,6 +105,8 @@ export const postRouter = createTRPCRouter({
         },
         where: {
           category: input.category,
+          active: true,
+          placement: input.placement === "ALL" ? undefined : input.placement,
           OR: input.q
             ? [
                 { content: { contains: input.q, mode: "insensitive" } },
@@ -126,6 +141,7 @@ export const postRouter = createTRPCRouter({
           keywords: input.keywords,
           createdById: ctx.session.user.id,
           category: input.category ?? category,
+          placement: input.placement,
         },
       });
     }),
@@ -150,7 +166,10 @@ export const postRouter = createTRPCRouter({
         data: {
           title: input.title,
           content: input.content,
+          category: input.category,
           slug,
+          active: input.active,
+          placement: input.placement,
         },
       });
     }),

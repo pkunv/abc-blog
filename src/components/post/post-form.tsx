@@ -17,6 +17,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -27,6 +28,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
 import { TypographySmall } from "@/components/ui/typography";
 import { fromJSONToPlate } from "@/lib/plate";
@@ -53,6 +61,8 @@ export default function PostForm({
       content: data?.content ?? "",
       keywords: data?.keywords ?? "",
       category: data?.category ?? new Date().toISOString().slice(0, 7),
+      active: data?.active ?? true,
+      placement: data?.placement ?? "DEFAULT",
     },
   });
 
@@ -167,6 +177,54 @@ export default function PostForm({
               </FormControl>
               <FormDescription>
                 Previously unused category will attach to your blog navigation.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="active"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Public</FormLabel>
+              <FormControl>
+                <Checkbox
+                  className="ml-2 self-center"
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <FormDescription>
+                You can set your post to non-public to save it as a draft.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="placement"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Placement</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a display place" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="DEFAULT">Default</SelectItem>
+                  <SelectItem value="FEATURED">Featured posts</SelectItem>
+                  <SelectItem value="ABOUT">About page</SelectItem>
+                  <SelectItem value="CONTACT">Contact page</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormDescription>
+                You can set your post to be displayed in a static area, like
+                Contact or About page. Featured posts are going to be appended
+                to the top of the Home page.
               </FormDescription>
               <FormMessage />
             </FormItem>
