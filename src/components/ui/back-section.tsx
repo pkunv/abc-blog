@@ -27,10 +27,7 @@ export function BackSection() {
   if (pathname === "/") return null;
   return (
     <div className="mx-auto flex w-full flex-row items-center justify-stretch gap-2 py-2">
-      <Button
-        onClick={() => router.push("/", { scroll: false })}
-        variant={"ghost"}
-      >
+      <Button onClick={() => router.back()} variant={"ghost"}>
         <ChevronLeft />
       </Button>
       <Breadcrumb>
@@ -39,7 +36,7 @@ export function BackSection() {
             <Fragment key={index}>
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link href={`${pathname}`}>{item.name}</Link>
+                  <Link href={`/${item.path}`}>{item.name}</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               {index < pathItems.length - 1 && <BreadcrumbSeparator />}
