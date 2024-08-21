@@ -35,7 +35,7 @@ import {
   ELEMENT_CODE_LINE,
   ELEMENT_CODE_SYNTAX,
 } from "@udecode/plate-code-block";
-import { createCommentsPlugin, MARK_COMMENT } from "@udecode/plate-comments";
+import { createCommentsPlugin } from "@udecode/plate-comments";
 import {
   createPlugins,
   Plate,
@@ -45,10 +45,7 @@ import {
 import { createInlineDatePlugin } from "@udecode/plate-date";
 import { createDndPlugin } from "@udecode/plate-dnd";
 import { createEmojiPlugin } from "@udecode/plate-emoji";
-import {
-  createExcalidrawPlugin,
-  ELEMENT_EXCALIDRAW,
-} from "@udecode/plate-excalidraw";
+import { createExcalidrawPlugin } from "@udecode/plate-excalidraw";
 import {
   createFontBackgroundColorPlugin,
   createFontColorPlugin,
@@ -75,11 +72,7 @@ import { createIndentPlugin } from "@udecode/plate-indent";
 import { createIndentListPlugin } from "@udecode/plate-indent-list";
 import { createJuicePlugin } from "@udecode/plate-juice";
 import { createKbdPlugin, MARK_KBD } from "@udecode/plate-kbd";
-import {
-  createColumnPlugin,
-  ELEMENT_COLUMN,
-  ELEMENT_COLUMN_GROUP,
-} from "@udecode/plate-layout";
+import { createColumnPlugin, ELEMENT_COLUMN } from "@udecode/plate-layout";
 import { createLineHeightPlugin } from "@udecode/plate-line-height";
 import { createLinkPlugin, ELEMENT_LINK } from "@udecode/plate-link";
 import { createTodoListPlugin, ELEMENT_TODO_LI } from "@udecode/plate-list";
@@ -120,10 +113,7 @@ import { CodeLeaf } from "@/components/plate-ui/code-leaf";
 import { CodeLineElement } from "@/components/plate-ui/code-line-element";
 import { CodeSyntaxLeaf } from "@/components/plate-ui/code-syntax-leaf";
 import { ColumnElement } from "@/components/plate-ui/column-element";
-import { ColumnGroupElement } from "@/components/plate-ui/column-group-element";
-import { CommentLeaf } from "@/components/plate-ui/comment-leaf";
 import { Editor } from "@/components/plate-ui/editor";
-import { ExcalidrawElement } from "@/components/plate-ui/excalidraw-element";
 import { FixedToolbar } from "@/components/plate-ui/fixed-toolbar";
 import { FixedToolbarButtons } from "@/components/plate-ui/fixed-toolbar-buttons";
 import { FloatingToolbar } from "@/components/plate-ui/floating-toolbar";
@@ -318,12 +308,10 @@ export const plugins = createPlugins(
         [ELEMENT_CODE_BLOCK]: CodeBlockElement,
         [ELEMENT_CODE_LINE]: CodeLineElement,
         [ELEMENT_CODE_SYNTAX]: CodeSyntaxLeaf,
-        [ELEMENT_EXCALIDRAW]: ExcalidrawElement,
         [ELEMENT_HR]: HrElement,
         [ELEMENT_IMAGE]: ImageElement,
         [ELEMENT_LINK]: LinkElement,
         [ELEMENT_TOGGLE]: ToggleElement,
-        [ELEMENT_COLUMN_GROUP]: ColumnGroupElement,
         [ELEMENT_COLUMN]: ColumnElement,
         [ELEMENT_H1]: withProps(HeadingElement, { variant: "h1" }),
         [ELEMENT_H2]: withProps(HeadingElement, { variant: "h2" }),
@@ -342,7 +330,6 @@ export const plugins = createPlugins(
         [ELEMENT_TODO_LI]: TodoListElement,
         [MARK_BOLD]: withProps(PlateLeaf, { as: "strong" }),
         [MARK_CODE]: CodeLeaf,
-        [MARK_COMMENT]: CommentLeaf,
         [MARK_HIGHLIGHT]: HighlightLeaf,
         [MARK_ITALIC]: withProps(PlateLeaf, { as: "em" }),
         [MARK_KBD]: KbdLeaf,

@@ -28,6 +28,7 @@ export default async function Image() {
           justifyContent: "center",
           letterSpacing: "-0.025em",
           fontWeight: 800,
+          fontFamily: "Noto Sans",
         }}
       >
         {env.BLOG_NAME}
@@ -38,7 +39,6 @@ export default async function Image() {
       // For convenience, we can re-use the exported opengraph-image
       // size config to also set the ImageResponse's width and height.
       ...size,
-      fonts: [],
     },
   );
 }

@@ -1,9 +1,10 @@
-'use client';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 
-import React from 'react';
+import React from "react";
 
-import * as TooltipPrimitive from '@radix-ui/react-tooltip';
-import { withCn, withProps } from '@udecode/cn';
+import * as TooltipPrimitive from "@radix-ui/react-tooltip";
+import { withCn, withProps } from "@udecode/cn";
 
 export const TooltipProvider = TooltipPrimitive.Provider;
 
@@ -17,11 +18,11 @@ export const TooltipContent = withCn(
   withProps(TooltipPrimitive.Content, {
     sideOffset: 4,
   }),
-  'z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md'
+  "z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md",
 );
 
 export function withTooltip<
-  T extends React.ComponentType<any> | keyof HTMLElementTagNameMap,
+  T extends React.ComponentType<unknown> | keyof HTMLElementTagNameMap,
 >(Component: T) {
   return React.forwardRef<
     React.ElementRef<T>,
@@ -29,16 +30,16 @@ export function withTooltip<
       tooltip?: React.ReactNode;
       tooltipContentProps?: Omit<
         React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>,
-        'children'
+        "children"
       >;
       tooltipProps?: Omit<
         React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Root>,
-        'children'
+        "children"
       >;
     } & React.ComponentPropsWithoutRef<T>
   >(function ExtendComponent(
     { tooltip, tooltipContentProps, tooltipProps, ...props },
-    ref
+    ref,
   ) {
     const [mounted, setMounted] = React.useState(false);
 
@@ -46,6 +47,7 @@ export function withTooltip<
       setMounted(true);
     }, []);
 
+    // @ts-expect-error tooltipProps is not a valid prop
     const component = <Component ref={ref} {...(props as any)} />;
 
     if (tooltip && mounted) {

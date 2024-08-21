@@ -1,11 +1,10 @@
-import React from 'react';
-
-import { cn, withRef } from '@udecode/cn';
-import { PlateElement } from '@udecode/plate-common';
-import { useFocused, useSelected } from 'slate-react';
+import { cn, withRef } from "@udecode/cn";
+import { PlateElement } from "@udecode/plate-common";
+import { useFocused, useSelected } from "slate-react";
 
 export const HrElement = withRef<typeof PlateElement>(
   ({ className, nodeProps, ...props }, ref) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { children } = props;
 
     const selected = useSelected();
@@ -17,14 +16,14 @@ export const HrElement = withRef<typeof PlateElement>(
           <hr
             {...nodeProps}
             className={cn(
-              'h-0.5 cursor-pointer rounded-sm border-none bg-muted bg-clip-content',
-              selected && focused && 'ring-2 ring-ring ring-offset-2',
-              className
+              "h-0.5 cursor-pointer rounded-sm border-none bg-muted bg-clip-content",
+              selected && focused && "ring-2 ring-ring ring-offset-2",
+              className,
             )}
           />
         </div>
         {children}
       </PlateElement>
     );
-  }
+  },
 );

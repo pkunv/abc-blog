@@ -25,7 +25,7 @@ export function SearchBar() {
       <InputWithIcon
         startIcon={Search}
         placeholder="Search..."
-        className="mx-auto w-96"
+        className="mx-auto w-[80dvw] sm:w-full"
         defaultValue={searchParams.get("q") ?? ""}
         onChange={(e) => handleSearch("q", e.target.value)}
         type="search"

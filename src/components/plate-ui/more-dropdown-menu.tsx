@@ -1,11 +1,9 @@
-import React from 'react';
+import type { DropdownMenuProps } from "@radix-ui/react-dropdown-menu";
 
-import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
+import { MARK_SUBSCRIPT, MARK_SUPERSCRIPT } from "@udecode/plate-basic-marks";
+import { focusEditor, toggleMark, useEditorRef } from "@udecode/plate-common";
 
-import { MARK_SUBSCRIPT, MARK_SUPERSCRIPT } from '@udecode/plate-basic-marks';
-import { focusEditor, toggleMark, useEditorRef } from '@udecode/plate-common';
-
-import { Icons } from '@/components/icons';
+import { Icons } from "@/components/icons";
 
 import {
   DropdownMenu,
@@ -13,8 +11,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   useOpenState,
-} from './dropdown-menu';
-import { ToolbarButton } from './toolbar';
+} from "./dropdown-menu";
+import { ToolbarButton } from "./toolbar";
 
 export function MoreDropdownMenu(props: DropdownMenuProps) {
   const editor = useEditorRef();
@@ -23,6 +21,7 @@ export function MoreDropdownMenu(props: DropdownMenuProps) {
   return (
     <DropdownMenu modal={false} {...openState} {...props}>
       <DropdownMenuTrigger asChild>
+        {/* @ts-expect-error plate-ui */}
         <ToolbarButton pressed={openState.open} tooltip="Insert">
           <Icons.more />
         </ToolbarButton>

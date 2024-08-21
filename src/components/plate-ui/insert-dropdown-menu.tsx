@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 
-import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
+import type { DropdownMenuProps } from "@radix-ui/react-dropdown-menu";
 
-import { ELEMENT_BLOCKQUOTE } from '@udecode/plate-block-quote';
+import { ELEMENT_BLOCKQUOTE } from "@udecode/plate-block-quote";
 import {
   focusEditor,
   insertEmptyElement,
   useEditorRef,
-} from '@udecode/plate-common';
-import { ELEMENT_H1, ELEMENT_H2, ELEMENT_H3 } from '@udecode/plate-heading';
-import { ELEMENT_PARAGRAPH } from '@udecode/plate-paragraph';
+} from "@udecode/plate-common";
+import { ELEMENT_H1, ELEMENT_H2, ELEMENT_H3 } from "@udecode/plate-heading";
+import { ELEMENT_PARAGRAPH } from "@udecode/plate-paragraph";
 
-import { Icons } from '@/components/icons';
+import { Icons } from "@/components/icons";
 
 import {
   DropdownMenu,
@@ -23,40 +23,40 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
   useOpenState,
-} from './dropdown-menu';
-import { ToolbarButton } from './toolbar';
+} from "./dropdown-menu";
+import { ToolbarButton } from "./toolbar";
 
 const items = [
   {
     items: [
       {
-        description: 'Paragraph',
+        description: "Paragraph",
         icon: Icons.paragraph,
-        label: 'Paragraph',
+        label: "Paragraph",
         value: ELEMENT_PARAGRAPH,
       },
       {
-        description: 'Heading 1',
+        description: "Heading 1",
         icon: Icons.h1,
-        label: 'Heading 1',
+        label: "Heading 1",
         value: ELEMENT_H1,
       },
       {
-        description: 'Heading 2',
+        description: "Heading 2",
         icon: Icons.h2,
-        label: 'Heading 2',
+        label: "Heading 2",
         value: ELEMENT_H2,
       },
       {
-        description: 'Heading 3',
+        description: "Heading 3",
         icon: Icons.h3,
-        label: 'Heading 3',
+        label: "Heading 3",
         value: ELEMENT_H3,
       },
       {
-        description: 'Quote (⌘+⇧+.)',
+        description: "Quote (⌘+⇧+.)",
         icon: Icons.blockquote,
-        label: 'Quote',
+        label: "Quote",
         value: ELEMENT_BLOCKQUOTE,
       },
       // {
@@ -84,7 +84,7 @@ const items = [
       //   icon: Icons.hr,
       // },
     ],
-    label: 'Basic blocks',
+    label: "Basic blocks",
   },
   // {
   //   label: 'Media',
@@ -135,6 +135,7 @@ export function InsertDropdownMenu(props: DropdownMenuProps) {
   return (
     <DropdownMenu modal={false} {...openState} {...props}>
       <DropdownMenuTrigger asChild>
+        {/* @ts-expect-error plate-ui */}
         <ToolbarButton isDropdown pressed={openState.open} tooltip="Insert">
           <Icons.add />
         </ToolbarButton>
@@ -214,7 +215,7 @@ export function InsertDropdownMenu(props: DropdownMenuProps) {
                   <Icon className="mr-2 size-5" />
                   {itemLabel}
                 </DropdownMenuItem>
-              )
+              ),
             )}
           </React.Fragment>
         ))}
