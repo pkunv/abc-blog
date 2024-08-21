@@ -60,9 +60,8 @@ export const postRouter = createTRPCRouter({
         id: z.number().optional(),
         slug: z.string().optional(),
         placement: z
-          .enum(["FEATURED", "ABOUT", "CONTACT", "DEFAULT"])
-          .default("DEFAULT")
-          .nullable(),
+          .enum(["FEATURED", "ABOUT", "CONTACT", "DEFAULT", "ALL"])
+          .default("DEFAULT"),
       }),
     )
     .query(async ({ input, ctx }) => {
@@ -71,8 +70,7 @@ export const postRouter = createTRPCRouter({
         where: {
           id: input.id,
           slug: input.slug,
-          active: true,
-          placement: input.placement,
+          placement: input.placement !== "ALL" ? input.placement : undefined,
         },
         orderBy: { createdAt: "desc" },
       });
@@ -88,6 +86,7 @@ export const postRouter = createTRPCRouter({
         placement: z
           .enum(["FEATURED", "ABOUT", "CONTACT", "DEFAULT", "ALL"])
           .default("DEFAULT"),
+        drafts: z.boolean().default(false),
       }),
     )
     .query(async ({ input, ctx }) => {
@@ -105,7 +104,7 @@ export const postRouter = createTRPCRouter({
         },
         where: {
           category: input.category,
-          active: true,
+          active: input.drafts ? undefined : true,
           placement: input.placement === "ALL" ? undefined : input.placement,
           OR: input.q
             ? [

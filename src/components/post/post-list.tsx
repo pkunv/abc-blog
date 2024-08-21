@@ -9,17 +9,20 @@ export async function PostList({
   category,
   q,
   placement,
+  drafts,
 }: {
   href: "/dashboard" | "/posts";
   category?: string;
   q?: string;
   placement?: "DEFAULT" | "ALL";
+  drafts?: boolean;
 }) {
   const posts = await api.post.getMany({
     category,
     contentPreview: true,
     q,
     placement: placement,
+    drafts,
   });
 
   return (

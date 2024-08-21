@@ -30,19 +30,19 @@ enum SpecialPlacement {
 }
 
 model Post {
-    id             Int               @id @default(autoincrement())
-    slug           String            @unique
+    id             Int              @id @default(autoincrement())
+    slug           String           @unique
     title          String
     content        String
     contentPreview String
     keywords       String
-    views          Int               @default(0)
-    reads          Int               @default(0)
-    createdAt      DateTime          @default(now())
+    views          Int              @default(0)
+    reads          Int              @default(0)
+    createdAt      DateTime         @default(now())
     category       String
-    updatedAt      DateTime          @updatedAt
-    active         Boolean           @default(true)
-    placement      SpecialPlacement? @default(DEFAULT)
+    updatedAt      DateTime         @updatedAt
+    active         Boolean          @default(true)
+    placement      SpecialPlacement @default(DEFAULT)
 
     createdBy   User   @relation(fields: [createdById], references: [id])
     createdById String

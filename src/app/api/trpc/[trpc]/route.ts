@@ -38,7 +38,7 @@ const handler = (req: NextRequest) =>
       const isQuery = type === "query";
 
       if (!ctx?.session && allOk && isQuery) {
-        // cache request for 1 day + revalidate once every second
+        // cache request for 1 day + revalidate once every five seconds
         const ONE_DAY_IN_SECONDS = 60 * 60 * 24;
         return {
           headers: new Headers([

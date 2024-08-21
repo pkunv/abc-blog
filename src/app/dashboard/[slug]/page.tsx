@@ -1,4 +1,4 @@
-import { PostForm } from "@/components/post/post-form";
+import PostForm from "@/components/post/post-form";
 import { TypographyH2 } from "@/components/ui/typography";
 import { api } from "@/trpc/server";
 import { notFound } from "next/navigation";
@@ -8,7 +8,7 @@ export default async function DashboardPostPage({
 }: {
   params: { slug: string };
 }) {
-  const post = await api.post.get({ slug: params.slug });
+  const post = await api.post.get({ slug: params.slug, placement: "ALL" });
   if (post === null) notFound();
 
   return (

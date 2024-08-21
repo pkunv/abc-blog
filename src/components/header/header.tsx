@@ -2,17 +2,23 @@ import { AppLogo } from "@/components/header/app-logo";
 import { HeaderMenu } from "@/components/header/header-menu";
 import { SearchBar } from "@/components/header/search-bar";
 import { getServerAuthSession } from "@/server/auth";
+import { api } from "@/trpc/server";
 
 export async function Header() {
   const session = await getServerAuthSession();
+  const specialPages = await api.layout.getEnabledSpecialPages();
   const links = [
     {
       title: "Home",
       href: "/",
     },
-    {
+    specialPages.about && {
       title: "About",
       href: "/about",
+    },
+    specialPages.contact && {
+      title: "Contact",
+      href: "/contact",
     },
     session && { title: "Dashboard", href: "/dashboard" },
     session && { title: "Logout", href: "/api/auth/signout?callback=/" },
