@@ -2,6 +2,7 @@
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/pkunv/abc-blog)
 ![GitHub package.json next.js dependency version](https://img.shields.io/github/package-json/dependency-version/pkunv/abc-blog/next)
+[![Tests](https://github.com/pkunv/abc-blog/actions/workflows/main.yml/badge.svg)](https://github.com/pkunv/abc-blog/actions/workflows/main.yml)
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fpkunv%2Fabc-blog)
 
 ## Overview
