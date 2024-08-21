@@ -81,11 +81,11 @@ export const SerializedPlateElement = ({
       );
     case "paragraph":
       return <TypographyP className="w-full">{children}</TypographyP>;
-    case "link":
+    case "a":
       return (
         // @ts-expect-error - not all types are handled
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        <Link href={escapeHtml(node.url)} target="_blank">
+        <Link href={escapeHtml(node.url)} target="_blank" class="underline">
           {children}
         </Link>
       );
@@ -101,8 +101,8 @@ export const SerializedPlateElement = ({
             alt={node.caption ? node.caption[0].text : "Post image"}
             width="0"
             height="0"
-            sizes="50vw"
-            className="h-auto w-1/2"
+            sizes="100vw"
+            className="h-auto w-1/3"
           />
           {/* @ts-expect-error - not all types are handled */}
           {node.caption && (

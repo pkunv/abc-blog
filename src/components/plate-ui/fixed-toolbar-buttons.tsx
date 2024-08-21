@@ -1,21 +1,20 @@
-import React from 'react';
-
 import {
   MARK_BOLD,
   MARK_CODE,
   MARK_ITALIC,
   MARK_STRIKETHROUGH,
   MARK_UNDERLINE,
-} from '@udecode/plate-basic-marks';
-import { useEditorReadOnly } from '@udecode/plate-common';
+} from "@udecode/plate-basic-marks";
+import { useEditorReadOnly } from "@udecode/plate-common";
 
-import { Icons } from '@/components/icons';
+import { Icons } from "@/components/icons";
 
-import { InsertDropdownMenu } from './insert-dropdown-menu';
-import { MarkToolbarButton } from './mark-toolbar-button';
-import { ModeDropdownMenu } from './mode-dropdown-menu';
-import { ToolbarGroup } from './toolbar';
-import { TurnIntoDropdownMenu } from './turn-into-dropdown-menu';
+import { ELEMENT_LINK } from "@udecode/plate-link";
+import { InsertDropdownMenu } from "./insert-dropdown-menu";
+import { MarkToolbarButton } from "./mark-toolbar-button";
+import { ModeDropdownMenu } from "./mode-dropdown-menu";
+import { ToolbarGroup } from "./toolbar";
+import { TurnIntoDropdownMenu } from "./turn-into-dropdown-menu";
 
 export function FixedToolbarButtons() {
   const readOnly = useEditorReadOnly();
@@ -25,7 +24,7 @@ export function FixedToolbarButtons() {
       <div
         className="flex flex-wrap"
         style={{
-          transform: 'translateX(calc(-1px))',
+          transform: "translateX(calc(-1px))",
         }}
       >
         {!readOnly && (
@@ -57,6 +56,9 @@ export function FixedToolbarButtons() {
               </MarkToolbarButton>
               <MarkToolbarButton nodeType={MARK_CODE} tooltip="Code (⌘+E)">
                 <Icons.code />
+              </MarkToolbarButton>
+              <MarkToolbarButton nodeType={ELEMENT_LINK} tooltip="Link">
+                <Icons.link />
               </MarkToolbarButton>
             </ToolbarGroup>
           </>
