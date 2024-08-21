@@ -6,7 +6,7 @@ export function HeaderMenu({
   links: { title: string; href: string }[];
 }) {
   return (
-    <nav className="flex flex-row items-center gap-2">
+    <nav className="flex flex-row flex-wrap items-center justify-center gap-2">
       {links.map((item) => (
         <MenuItem key={item.href} item={item} />
       ))}
