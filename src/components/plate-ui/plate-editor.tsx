@@ -376,7 +376,7 @@ export function PlateEditor({
             <FixedToolbarButtons />
           </FixedToolbar>
 
-          <Editor className="h-56 resize-y" />
+          <Editor className="h-56 resize-y" aria-label="content" />
 
           <FloatingToolbar>
             <FloatingToolbarButtons />

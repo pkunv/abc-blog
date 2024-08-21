@@ -13,7 +13,8 @@
     "postinstall": "prisma generate",
     "lint": "next lint",
     "start": "next start",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@ariakit/react": "^0.4.8",
@@ -109,6 +110,7 @@
   "devDependencies": {
     "@commitlint/cli": "^19.4.0",
     "@commitlint/config-conventional": "^19.2.2",
+    "@playwright/test": "^1.46.1",
     "@types/escape-html": "^1.0.4",
     "@types/eslint": "^8.56.10",
     "@types/node": "^20.14.10",
@@ -116,6 +118,7 @@
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
+    "dotenv": "^16.4.5",
     "escape-html": "^1.0.3",
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.2.4",
