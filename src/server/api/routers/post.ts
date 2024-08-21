@@ -124,7 +124,7 @@ export const postRouter = createTRPCRouter({
 
       // check if this slug already exists
       if (await ctx.db.post.findFirst({ where: { slug } })) {
-        slug = `${slug}-1`;
+        slug = `${slug}-${new Date().getTime().toString().slice(-4)}`;
       }
 
       const category = new Date().toISOString().split("T")[0]!.slice(0, 7);
