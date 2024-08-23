@@ -42,6 +42,10 @@ export const SerializedPlateElement = ({
       return <strong className="font-bold">{string}</strong>;
     }
     //@ts-expect-error - not all types are handled
+    if (node.italic) {
+      return <i className="italic">{string}</i>;
+    }
+    //@ts-expect-error - not all types are handled
     if (node.superscript) {
       return <sup>{string}</sup>;
     }
@@ -85,7 +89,7 @@ export const SerializedPlateElement = ({
       return (
         // @ts-expect-error - not all types are handled
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        <Link href={escapeHtml(node.url)} target="_blank" class="underline">
+        <Link href={escapeHtml(node.url)} target="_blank" className="underline">
           {children}
         </Link>
       );
