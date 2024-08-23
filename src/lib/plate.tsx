@@ -103,9 +103,11 @@ export const SerializedPlateElement = ({
             // @ts-expect-error - not all types are handled
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             alt={node.caption ? node.caption[0].text : "Post image"}
-            width="0"
-            height="0"
+            width={0}
+            height={0}
             sizes="100vw"
+            /* @ts-expect-error - not all types are handled */
+            style={{ width: node.width, height: "auto" }} // optional
             className="h-auto w-1/3"
           />
           {/* @ts-expect-error - not all types are handled */}
