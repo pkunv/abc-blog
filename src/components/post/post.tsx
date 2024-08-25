@@ -4,6 +4,7 @@ import { blogProps } from "@/lib/getBlogProps";
 import {
   fromJSONToPlainText,
   fromJSONToPlate,
+  RichText,
   SerializedPlateElement,
 } from "@/lib/plate";
 import type { RouterOutputs } from "@/trpc/react";
@@ -57,7 +58,7 @@ export default function Post({
       <article className="w-full space-y-2 text-left">
         <TypographyH1 className="mb-4">{post.title}</TypographyH1>
         {fromJSONToPlate(post.content)?.map((node, index) => (
-          <SerializedPlateElement node={node} key={index} />
+          <SerializedPlateElement node={node as RichText} key={index} />
         ))}
         {post.placement === "DEFAULT" && (
           <TypographyMuted className="mt-4">
