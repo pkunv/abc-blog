@@ -8,7 +8,7 @@
 ## Overview
 
 Full stack web application to create a personal blog.\
-Easy to use and user friendly UI.
+It's easy to use, has a friendly UI and it's a good starting base if you want to fork it.
 
 ## Functionalities
 
