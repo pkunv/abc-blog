@@ -59,6 +59,7 @@ import {
   ELEMENT_H4,
   ELEMENT_H5,
   ELEMENT_H6,
+  KEYS_HEADING,
 } from "@udecode/plate-heading";
 import {
   createHighlightPlugin,
@@ -75,7 +76,14 @@ import { createKbdPlugin, MARK_KBD } from "@udecode/plate-kbd";
 import { createColumnPlugin, ELEMENT_COLUMN } from "@udecode/plate-layout";
 import { createLineHeightPlugin } from "@udecode/plate-line-height";
 import { createLinkPlugin, ELEMENT_LINK } from "@udecode/plate-link";
-import { createTodoListPlugin, ELEMENT_TODO_LI } from "@udecode/plate-list";
+import {
+  createListPlugin,
+  createTodoListPlugin,
+  ELEMENT_LI,
+  ELEMENT_OL,
+  ELEMENT_TODO_LI,
+  ELEMENT_UL,
+} from "@udecode/plate-list";
 import {
   createImagePlugin,
   createMediaEmbedPlugin,
@@ -89,7 +97,10 @@ import {
   ELEMENT_PARAGRAPH,
 } from "@udecode/plate-paragraph";
 import { createResetNodePlugin } from "@udecode/plate-reset-node";
-import { createDeletePlugin } from "@udecode/plate-select";
+import {
+  createDeletePlugin,
+  createSelectOnBackspacePlugin,
+} from "@udecode/plate-select";
 import { createBlockSelectionPlugin } from "@udecode/plate-selection";
 import { createDeserializeCsvPlugin } from "@udecode/plate-serializer-csv";
 import { createDeserializeDocxPlugin } from "@udecode/plate-serializer-docx";
@@ -140,12 +151,37 @@ import { TodoListElement } from "@/components/plate-ui/todo-list-element";
 import { ToggleElement } from "@/components/plate-ui/toggle-element";
 import { withDraggables } from "@/components/plate-ui/with-draggables";
 
+import { ListElement } from "@/components/plate-ui/list-element";
+import { autoformatLists } from "@/lib/autoformatLists";
+import { autoformatRules } from "@/lib/autoformatRules";
 import { fromPlateToJSON } from "@/lib/plate";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
-import { type PlateProps } from "@udecode/plate-common";
+import {
+  isCodeBlockEmpty,
+  isSelectionAtCodeBlockStart,
+  unwrapCodeBlock,
+} from "@udecode/plate-code-block";
+import {
+  isBlockAboveEmpty,
+  isSelectionAtBlockStart,
+  PlateElement,
+  type PlateProps,
+} from "@udecode/plate-common";
+
+const resetBlockTypesCommonRule = {
+  types: [ELEMENT_TODO_LI],
+  defaultType: ELEMENT_PARAGRAPH,
+};
+
+const resetBlockTypesCodeBlockRule = {
+  types: [ELEMENT_CODE_BLOCK],
+  defaultType: ELEMENT_PARAGRAPH,
+  onReset: unwrapCodeBlock,
+};
 
 export const plugins = createPlugins(
   [
+    createListPlugin(),
     createParagraphPlugin(),
     createHeadingPlugin(),
     createBlockquotePlugin(),
@@ -217,16 +253,15 @@ export const plugins = createPlugins(
         props: {
           defaultNodeValue: 1.5,
           validNodeValues: [1, 1.2, 1.5, 2, 3],
-          validTypes: [
-            ELEMENT_PARAGRAPH,
-            // ELEMENT_H1, ELEMENT_H2, ELEMENT_H3
-          ],
+          validTypes: [ELEMENT_PARAGRAPH, ELEMENT_H1, ELEMENT_H2, ELEMENT_H3],
         },
       },
     }),
     createAutoformatPlugin({
       options: {
         rules: [
+          ...autoformatRules,
+          ...autoformatLists,
           // Usage: https://platejs.org/docs/autoformat
         ],
         enableUndoOnDelete: true,
@@ -259,7 +294,7 @@ export const plugins = createPlugins(
             query: {
               start: true,
               end: true,
-              // allow: KEYS_HEADING,
+              allow: KEYS_HEADING,
             },
             relative: true,
             level: 1,
@@ -271,7 +306,26 @@ export const plugins = createPlugins(
     createResetNodePlugin({
       options: {
         rules: [
-          // Usage: https://platejs.org/docs/reset-node
+          {
+            ...resetBlockTypesCommonRule,
+            hotkey: "Enter",
+            predicate: isBlockAboveEmpty,
+          },
+          {
+            ...resetBlockTypesCommonRule,
+            hotkey: "Backspace",
+            predicate: isSelectionAtBlockStart,
+          },
+          {
+            ...resetBlockTypesCodeBlockRule,
+            hotkey: "Enter",
+            predicate: isCodeBlockEmpty,
+          },
+          {
+            ...resetBlockTypesCodeBlockRule,
+            hotkey: "Backspace",
+            predicate: isSelectionAtCodeBlockStart,
+          },
         ],
       },
     }),
@@ -283,12 +337,17 @@ export const plugins = createPlugins(
           {
             hotkey: "enter",
             query: {
-              allow: [
-                // ELEMENT_CODE_BLOCK, ELEMENT_BLOCKQUOTE, ELEMENT_TD
-              ],
+              allow: [ELEMENT_CODE_BLOCK, ELEMENT_BLOCKQUOTE, ELEMENT_TD],
             },
           },
         ],
+      },
+    }),
+    createSelectOnBackspacePlugin({
+      options: {
+        query: {
+          allow: [ELEMENT_IMAGE, ELEMENT_HR],
+        },
       },
     }),
     createTabbablePlugin(),
@@ -337,6 +396,9 @@ export const plugins = createPlugins(
         [MARK_SUBSCRIPT]: withProps(PlateLeaf, { as: "sub" }),
         [MARK_SUPERSCRIPT]: withProps(PlateLeaf, { as: "sup" }),
         [MARK_UNDERLINE]: withProps(PlateLeaf, { as: "u" }),
+        [ELEMENT_LI]: withProps(PlateElement, { as: "li" }),
+        [ELEMENT_UL]: withProps(ListElement, { variant: "ul" }),
+        [ELEMENT_OL]: withProps(ListElement, { variant: "ol" }),
       }),
     ),
   },
