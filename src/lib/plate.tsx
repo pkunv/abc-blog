@@ -1,12 +1,56 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { TypographyH4, TypographyP } from "@/components/ui/typography";
+import { cn } from "@/lib/utils";
 import { type PlateProps } from "@udecode/plate-common";
 
+import type { TText } from "@udecode/slate";
 import escapeHtml from "escape-html";
 import Image from "next/image";
 import Link from "next/link";
+import { Fragment } from "react";
 import { Node, Text } from "slate";
+
+export interface RichText extends TText {
+  type: string;
+  backgroundColor?: React.CSSProperties["backgroundColor"];
+  bold?: boolean;
+  code?: boolean;
+  color?: React.CSSProperties["color"];
+  fontFamily?: React.CSSProperties["fontFamily"];
+  fontSize?: React.CSSProperties["fontSize"];
+  fontWeight?: React.CSSProperties["fontWeight"];
+  italic?: boolean;
+  kbd?: boolean;
+  strikethrough?: boolean;
+  subscript?: boolean;
+  underline?: boolean;
+  text: string;
+  url?: string;
+  children: RichText[];
+}
+
+interface RichElement {
+  type: string;
+  backgroundColor?: React.CSSProperties["backgroundColor"];
+  bold?: boolean;
+  code?: boolean;
+  color?: React.CSSProperties["color"];
+  fontFamily?: React.CSSProperties["fontFamily"];
+  fontSize?: React.CSSProperties["fontSize"];
+  fontWeight?: React.CSSProperties["fontWeight"];
+  italic?: boolean;
+  superscript?: boolean;
+  kbd?: boolean;
+  strikethrough?: boolean;
+  caption?: {
+    text: string;
+  }[];
+  url?: string;
+  subscript?: boolean;
+  underline?: boolean;
+  children: RichText[];
+}
 
 export function fromJSONToPlate(value: string | undefined | null) {
   return value && value.length > 0
@@ -33,33 +77,81 @@ export function fromJSONToPlainText(value: string | undefined | null) {
 export const SerializedPlateElement = ({
   node,
 }: {
-  node: Node;
+  node: RichElement;
 }): React.ReactNode => {
   if (Text.isText(node)) {
-    const string = escapeHtml(node.text).replaceAll("&#39;", "'");
-    //@ts-expect-error - not all types are handled
+    const string = escapeHtml(node.text)
+      .replaceAll("&#39;", "'")
+      .replaceAll("&#34;", '"')
+      .replaceAll("&#x27;", "'")
+      .replaceAll("&#x22;", '"')
+      .replaceAll("&quot;", '"');
+    // DEFINING STYLES FOR TEXT
+    const textClasses = [];
+    const textStyles = {} as React.CSSProperties;
+
     if (node.bold) {
-      return <strong className="font-bold">{string}</strong>;
+      textClasses.push("font-bold");
     }
-    //@ts-expect-error - not all types are handled
     if (node.italic) {
-      return <i className="italic">{string}</i>;
+      textClasses.push("italic");
     }
-    //@ts-expect-error - not all types are handled
     if (node.superscript) {
-      return <sup>{string}</sup>;
+      textClasses.push("superscript");
     }
-    //@ts-expect-error - not all types are handled
     if (node.underline) {
-      return <u>{string}</u>;
+      textClasses.push("underline");
     }
-    return <>{string}</>;
+    if (node.color) {
+      textStyles.color = node.color;
+    }
+    if (node.backgroundColor) {
+      textStyles.backgroundColor = node.backgroundColor;
+    }
+
+    // DEFINING ELEMENTS FOR TEXT
+    let element: JSX.Element = <Fragment>{string}</Fragment>;
+    if (node.bold) {
+      element = (
+        <strong className={cn(textClasses)} style={textStyles}>
+          {string}
+        </strong>
+      );
+    }
+    if (node.italic) {
+      element = (
+        <span className={cn(textClasses)} style={textStyles}>
+          {string}
+        </span>
+      );
+    }
+    if (node.superscript) {
+      element = (
+        <sup className={cn(textClasses)} style={textStyles}>
+          {string}
+        </sup>
+      );
+    }
+    if (node.underline) {
+      element = (
+        <u className={cn(textClasses)} style={textStyles}>
+          {string}
+        </u>
+      );
+    }
+    if (node.color) {
+      element = (
+        <span className={cn(textClasses)} style={textStyles}>
+          {string}
+        </span>
+      );
+    }
+    return element;
   }
 
   const children = node.children.map((n, index) => (
     <SerializedPlateElement node={n} key={index} />
   ));
-  //@ts-expect-error - not all types are handled
   switch (node.type) {
     case "h1":
       return (
@@ -87,7 +179,6 @@ export const SerializedPlateElement = ({
       return <TypographyP className="w-full">{children}</TypographyP>;
     case "a":
       return (
-        // @ts-expect-error - not all types are handled
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         <Link href={escapeHtml(node.url)} target="_blank" className="underline">
           {children}
@@ -96,21 +187,18 @@ export const SerializedPlateElement = ({
     case "img":
       return (
         <>
-          <Image
-            // @ts-expect-error - not all types are handled
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-assignment
-            src={node.url}
-            // @ts-expect-error - not all types are handled
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            alt={node.caption ? node.caption[0].text : "Post image"}
-            width={0}
-            height={0}
-            sizes="100vw"
-            /* @ts-expect-error - not all types are handled */
-            style={{ width: node.width, height: "auto" }} // optional
-            className="h-auto w-1/3"
-          />
-          {/* @ts-expect-error - not all types are handled */}
+          {node.url && (
+            <Image
+              src={node.url}
+              alt={node.caption?.[0]?.text ?? "Post image"}
+              width={0}
+              height={0}
+              sizes="100vw"
+              /* @ts-expect-error - not all types are handled */
+              style={{ width: node.width, height: "auto" }} // optional
+              className="h-auto w-1/3"
+            />
+          )}
           {node.caption && (
             <span className="text-sm text-muted-foreground">
               {/*  @ts-expect-error - not all types are handled eslint-disable-next-line @typescript-eslint/no-unsafe-member-access */}
@@ -119,7 +207,14 @@ export const SerializedPlateElement = ({
           )}
         </>
       );
+    case "lic":
+      return <ul className="inline w-fit">{children}</ul>;
+    case "li":
+      return <li className="list-inside list-disc">{children}</li>;
     default:
-      return <TypographyP>{children}</TypographyP>;
+      if (children[0]?.props.node.text) {
+        return <TypographyP>{children}</TypographyP>;
+      }
+      return <>{children}</>;
   }
 };
