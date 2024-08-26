@@ -10,6 +10,7 @@ import { z } from "zod";
 
 const postInclude = {
   createdBy: true,
+  files: true,
 };
 
 function convertTitleToSlug(title: string) {
@@ -141,6 +142,18 @@ export const postRouter = createTRPCRouter({
           createdById: ctx.session.user.id,
           category: input.category ?? category,
           placement: input.placement,
+          files: {
+            create: input.files
+              ? input.files.map((file) => {
+                  return {
+                    url: file.url,
+                    type: file.type,
+                    name: file.name,
+                    altText: null,
+                  };
+                })
+              : undefined,
+          },
         },
       });
     }),
@@ -169,6 +182,18 @@ export const postRouter = createTRPCRouter({
           slug,
           active: input.active,
           placement: input.placement,
+          files: {
+            create: input.files
+              ? input.files.map((file) => {
+                  return {
+                    url: file.url,
+                    type: file.type,
+                    name: file.name,
+                    altText: null,
+                  };
+                })
+              : undefined,
+          },
         },
       });
     }),

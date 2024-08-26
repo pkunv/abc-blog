@@ -46,7 +46,21 @@ model Post {
 
     createdBy   User   @relation(fields: [createdById], references: [id])
     createdById String
+    files       File[]
 
     @@index([id])
     @@index([slug])
+}
+
+model File {
+    id        Int      @id @default(autoincrement())
+    url       String
+    name      String
+    type      String
+    altText   String?
+    createdAt DateTime @default(now())
+    postId    Int
+    post      Post     @relation(fields: [postId], references: [id])
+
+    @@index([id])
 }

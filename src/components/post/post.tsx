@@ -1,4 +1,11 @@
 import { CollectImpression } from "@/components/post/collect-impression";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import { TypographyH1, TypographyMuted } from "@/components/ui/typography";
 import { blogProps } from "@/lib/getBlogProps";
 import {
@@ -8,6 +15,7 @@ import {
   SerializedPlateElement,
 } from "@/lib/plate";
 import type { RouterOutputs } from "@/trpc/react";
+import Image from "next/image";
 import type { BlogPosting, WithContext } from "schema-dts";
 
 export default function Post({
@@ -60,6 +68,25 @@ export default function Post({
         {fromJSONToPlate(post.content)?.map((node, index) => (
           <SerializedPlateElement node={node as RichText} key={index} />
         ))}
+        {post.files.length > 0 && (
+          <Carousel>
+            <CarouselContent>
+              {post.files.map((file, index) => (
+                <CarouselItem key={index}>
+                  <Image
+                    src={file.url}
+                    alt={"Post image"}
+                    width={240}
+                    height={240}
+                  />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+        )}
+
         {post.placement === "DEFAULT" && (
           <TypographyMuted className="mt-4">
             {post.createdAt.toLocaleDateString(blogProps.language, {

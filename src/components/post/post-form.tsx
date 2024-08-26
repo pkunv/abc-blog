@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { type z } from "zod";
 
 import { PlateEditor } from "@/components/plate-ui/plate-editor";
@@ -36,8 +36,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { TypographySmall } from "@/components/ui/typography";
 import { fromJSONToPlate } from "@/lib/plate";
+import { UploadButton } from "@/lib/uploadthing";
 import { cn } from "@/lib/utils";
 import { api } from "@/trpc/react";
 import { postSchema } from "@/trpc/schemas";
@@ -49,8 +58,10 @@ const formSchema = postSchema;
 
 export default function PostForm({
   data,
+  carouselEnabled,
 }: {
   data?: z.infer<typeof formSchema>;
+  carouselEnabled: boolean;
 }) {
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -63,7 +74,12 @@ export default function PostForm({
       category: data?.category ?? new Date().toISOString().slice(0, 7),
       active: data?.active ?? true,
       placement: data?.placement ?? "DEFAULT",
+      files: data?.files ?? [],
     },
+  });
+  const carouselFilesArray = useFieldArray({
+    control: form.control,
+    name: "files",
   });
 
   const createPost = api.post.create.useMutation({
@@ -230,6 +246,59 @@ export default function PostForm({
             </FormItem>
           )}
         />
+        {carouselEnabled && (
+          <FormField
+            control={form.control}
+            name="files"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Carousel images</FormLabel>
+                <FormControl>
+                  <UploadButton
+                    endpoint="imageUploader"
+                    input={{ postId: data?.id }}
+                    onClientUploadComplete={(res) => {
+                      res.map((file) => {
+                        carouselFilesArray.append({
+                          url: file.url,
+                          type: file.type,
+                          name: file.name,
+                        });
+                      });
+                      toast.success("Files uploaded!");
+                      form.clearErrors("files");
+                    }}
+                    onUploadError={(error: Error) => {
+                      form.setError("files", {
+                        type: "manual",
+                        message: error.message,
+                      });
+                    }}
+                  />
+                </FormControl>
+                {form.getValues("files") &&
+                  form.getValues("files")!.length > 0 && (
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Filename</TableHead>
+                          <TableHead>Type</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {form.getValues("files")!.map((file, index) => (
+                          <TableRow key={index}>
+                            <TableCell>{file.name}</TableCell>
+                            <TableCell>{file.type}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  )}
+              </FormItem>
+            )}
+          />
+        )}
         <div className="flex items-center justify-between gap-2">
           <div className="flex min-w-8 flex-col items-center gap-2">
             {data && (

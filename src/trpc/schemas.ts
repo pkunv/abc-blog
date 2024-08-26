@@ -10,4 +10,7 @@ export const postSchema = z.object({
   reads: z.number().optional(),
   active: z.boolean().optional(),
   placement: z.enum(["FEATURED", "ABOUT", "CONTACT", "DEFAULT"]).optional(),
+  files: z
+    .array(z.object({ url: z.string(), type: z.string(), name: z.string() }))
+    .optional(),
 });
