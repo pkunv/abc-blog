@@ -36,6 +36,8 @@ export const env = createEnv({
       (val) => val === "1" || val === "true",
       z.boolean(),
     ),
+    UMAMI_URL: z.string().optional(),
+    UMAMI_WEBSITE_ID: z.string().optional(),
   },
 
   /**
@@ -65,6 +67,8 @@ export const env = createEnv({
     BLOG_AUTHOR: process.env.BLOG_AUTHOR,
     BLOG_KEYWORDS: process.env.BLOG_KEYWORDS,
     LOCALIZE_MONTHS_BY_LANG: process.env.LOCALIZE_MONTHS_BY_LANG,
+    UMAMI_URL: process.env.UMAMI_URL,
+    UMAMI_WEBSITE_ID: process.env.UMAMI_WEBSITE_ID,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

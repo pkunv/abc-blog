@@ -14,6 +14,7 @@ import { env } from "@/env";
 import { blogProps } from "@/lib/getBlogProps";
 import { TRPCReactProvider } from "@/trpc/react";
 import { api } from "@/trpc/server";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXTAUTH_URL),
@@ -46,6 +47,13 @@ export default async function RootLayout({
       className={`${GeistMono.variable}`}
       suppressHydrationWarning
     >
+      {env.UMAMI_URL && env.UMAMI_WEBSITE_ID && (
+        <Script
+          async
+          src={env.UMAMI_URL}
+          data-website-id={env.UMAMI_WEBSITE_ID}
+        />
+      )}
       <body className="flex h-full min-h-dvh flex-col">
         <TRPCReactProvider>
           <ThemeProvider
