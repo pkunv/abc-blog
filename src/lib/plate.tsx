@@ -85,7 +85,8 @@ export const SerializedPlateElement = ({
       .replaceAll("&#34;", '"')
       .replaceAll("&#x27;", "'")
       .replaceAll("&#x22;", '"')
-      .replaceAll("&quot;", '"');
+      .replaceAll("&quot;", '"')
+      .replaceAll("&amp;", "&");
     // DEFINING STYLES FOR TEXT
     const textClasses = [];
     const textStyles = {} as React.CSSProperties;
