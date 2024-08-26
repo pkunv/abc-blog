@@ -10,12 +10,14 @@ export async function PostList({
   q,
   placement,
   drafts,
+  take,
 }: {
   href: "/dashboard" | "/posts";
   category?: string;
   q?: string;
   placement?: "DEFAULT" | "ALL";
   drafts?: boolean;
+  take?: number;
 }) {
   const posts = await api.post.getMany({
     category,
@@ -23,6 +25,7 @@ export async function PostList({
     q,
     placement: placement,
     drafts,
+    take,
   });
 
   return (

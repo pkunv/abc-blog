@@ -25,7 +25,7 @@ export default async function Home() {
         </>
       )}
       <TypographyH2 className="w-full text-left">Posts</TypographyH2>
-      <PostList href="/posts" />
+      <PostList href="/posts" take={50} />
     </>
   );
 }
