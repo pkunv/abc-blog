@@ -43,9 +43,10 @@ export default async function RootLayout({
   const theme = blogProps.theme === "dark" ? "dark" : "light";
   return (
     <html
-      lang="en"
+      lang={
+        env.BLOG_LANGUAGE.includes("-") ? env.BLOG_LANGUAGE.split("-")[0] : "en"
+      }
       className={`${GeistMono.variable}`}
-      suppressHydrationWarning
     >
       {env.UMAMI_URL && env.UMAMI_WEBSITE_ID && (
         <Script
