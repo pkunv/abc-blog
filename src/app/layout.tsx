@@ -54,7 +54,7 @@ export default async function RootLayout({
           data-website-id={env.UMAMI_WEBSITE_ID}
         />
       )}
-      <body className="flex h-full min-h-dvh flex-col">
+      <body className="flex h-full min-h-dvh flex-col overflow-y-hidden">
         <TRPCReactProvider>
           <ThemeProvider
             attribute="class"
