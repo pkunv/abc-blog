@@ -69,22 +69,27 @@ export default function Post({
           <SerializedPlateElement node={node as RichText} key={index} />
         ))}
         {post.files.length > 0 && (
-          <Carousel>
-            <CarouselContent>
-              {post.files.map((file, index) => (
-                <CarouselItem key={index}>
-                  <Image
-                    src={file.url}
-                    alt={"Post image"}
-                    width={240}
-                    height={240}
-                  />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
+          <div className="flex w-full justify-center">
+            <Carousel className="h-96 w-4/5">
+              <CarouselContent>
+                {post.files.map((file, index) => (
+                  <CarouselItem key={index}>
+                    <div className="relative h-96">
+                      <Image
+                        src={file.url}
+                        alt={`${index + 1} Post image`}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        fill={true}
+                        objectFit="contain"
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
+          </div>
         )}
 
         {post.placement === "DEFAULT" && (
