@@ -24,8 +24,8 @@ export default async function Home() {
           <Post post={post} blog={blogProps} />
         </>
       )}
-      <TypographyH2 className="w-full text-left">Posts</TypographyH2>
-      <PostList href="/posts" take={50} />
+      <TypographyH2 className="w-full text-left">Browse new posts</TypographyH2>
+      <PostList href="/posts" take={25} />
     </>
   );
 }
