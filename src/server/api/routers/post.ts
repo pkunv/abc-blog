@@ -4,6 +4,7 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc";
+import { utapi } from "@/server/uploadthing";
 import { postSchema } from "@/trpc/schemas";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
@@ -170,7 +171,31 @@ export const postRouter = createTRPCRouter({
 
       // check if this slug already exists
       if (await ctx.db.post.findFirst({ where: { slug } })) {
-        slug = `${slug}-1`;
+        slug = `${slug}-${new Date().getTime().toString().slice(-4)}`;
+      }
+
+      if (input.files) {
+        const deleteRequest = await utapi.deleteFiles(
+          input.files
+            .filter((file) => file.deleted === true)
+            .map((file) => file.url.split("/").pop()!),
+        );
+
+        if (
+          !deleteRequest.success ||
+          deleteRequest.deletedCount !==
+            input.files.filter((file) => file.deleted).length
+        ) {
+          console.log(deleteRequest, input.files);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to delete files",
+          });
+        }
+
+        await ctx.db.file.deleteMany({
+          where: { postId: input.id },
+        });
       }
 
       return ctx.db.post.update({
@@ -184,14 +209,16 @@ export const postRouter = createTRPCRouter({
           placement: input.placement,
           files: {
             create: input.files
-              ? input.files.map((file) => {
-                  return {
-                    url: file.url,
-                    type: file.type,
-                    name: file.name,
-                    altText: null,
-                  };
-                })
+              ? input.files
+                  .filter((file) => !file.deleted)
+                  .map((file) => {
+                    return {
+                      url: file.url,
+                      type: file.type,
+                      name: file.name,
+                      altText: null,
+                    };
+                  })
               : undefined,
           },
         },

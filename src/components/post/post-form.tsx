@@ -52,6 +52,7 @@ import { api } from "@/trpc/react";
 import { postSchema } from "@/trpc/schemas";
 import { Eye, SquareChartGantt, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
 
 const formSchema = postSchema;
@@ -63,6 +64,10 @@ export default function PostForm({
   data?: z.infer<typeof formSchema>;
   carouselEnabled: boolean;
 }) {
+  const [isDeleteFileDialogOpen, setIsDeleteFileDialogOpen] = useState(false);
+  const [deleteFileUrl, setDeleteFileUrl] = useState<string | null>(null);
+  const ref = useRef<HTMLFormElement>(null);
+
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -126,7 +131,11 @@ export default function PostForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-4">
+      <form
+        ref={ref}
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="w-full space-y-4"
+      >
         <FormField
           control={form.control}
           name="title"
@@ -247,57 +256,116 @@ export default function PostForm({
           )}
         />
         {carouselEnabled && (
-          <FormField
-            control={form.control}
-            name="files"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Carousel images</FormLabel>
-                <FormControl>
-                  <UploadButton
-                    endpoint="imageUploader"
-                    input={{ postId: data?.id }}
-                    onClientUploadComplete={(res) => {
-                      res.map((file) => {
-                        carouselFilesArray.append({
-                          url: file.url,
-                          type: file.type,
-                          name: file.name,
+          <>
+            <AlertDialog open={isDeleteFileDialogOpen}>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This will permanently delete your post carousel image. You
+                    can undo this action by refreshing the page.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    type="button"
+                    onClick={() => {
+                      if (deleteFileUrl) {
+                        const file = carouselFilesArray.fields.find(
+                          (file) => file.url === deleteFileUrl,
+                        );
+                        if (!file) return;
+                        carouselFilesArray.update(
+                          carouselFilesArray.fields.findIndex(
+                            (file) => file.url === deleteFileUrl,
+                          ),
+                          {
+                            url: file?.url,
+                            type: file?.type,
+                            name: file?.name,
+                            deleted: true,
+                          },
+                        );
+                        setIsDeleteFileDialogOpen(false);
+                        if (ref.current) ref.current.requestSubmit();
+                      }
+                    }}
+                  >
+                    Delete
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+            <FormField
+              control={form.control}
+              name="files"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Carousel images</FormLabel>
+                  <FormControl>
+                    <UploadButton
+                      endpoint="imageUploader"
+                      input={{ postId: data?.id }}
+                      onClientUploadComplete={(res) => {
+                        res.map((file) => {
+                          carouselFilesArray.append({
+                            url: file.url,
+                            type: file.type,
+                            name: file.name,
+                          });
                         });
-                      });
-                      toast.success("Files uploaded!");
-                      form.clearErrors("files");
-                    }}
-                    onUploadError={(error: Error) => {
-                      form.setError("files", {
-                        type: "manual",
-                        message: error.message,
-                      });
-                    }}
-                  />
-                </FormControl>
-                {form.getValues("files") &&
-                  form.getValues("files")!.length > 0 && (
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>Filename</TableHead>
-                          <TableHead>Type</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {form.getValues("files")!.map((file, index) => (
-                          <TableRow key={index}>
-                            <TableCell>{file.name}</TableCell>
-                            <TableCell>{file.type}</TableCell>
+                        toast.success("Files uploaded!");
+                        form.clearErrors("files");
+                      }}
+                      onUploadError={(error: Error) => {
+                        console.log(error);
+                        form.setError("files", {
+                          type: "manual",
+                          message: error.message,
+                        });
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                  {form.getValues("files") &&
+                    form.getValues("files")!.length > 0 && (
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead>Filename</TableHead>
+                            <TableHead>Type</TableHead>
+                            <TableHead>Action</TableHead>
                           </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  )}
-              </FormItem>
-            )}
-          />
+                        </TableHeader>
+                        <TableBody>
+                          {form
+                            .getValues("files")!
+                            .filter((file) => !file.deleted)
+                            .map((file, index) => (
+                              <TableRow key={index}>
+                                <TableCell>{file.name}</TableCell>
+                                <TableCell>{file.type}</TableCell>
+                                <TableCell>
+                                  <Button
+                                    type="button"
+                                    onClick={() => {
+                                      setDeleteFileUrl(file.url);
+                                      setIsDeleteFileDialogOpen(true);
+                                    }}
+                                  >
+                                    <Trash2 />
+                                  </Button>
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                        </TableBody>
+                      </Table>
+                    )}
+                </FormItem>
+              )}
+            />
+          </>
         )}
         <div className="flex items-center justify-between gap-2">
           <div className="flex min-w-8 flex-col items-center gap-2">

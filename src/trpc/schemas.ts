@@ -11,6 +11,13 @@ export const postSchema = z.object({
   active: z.boolean().optional(),
   placement: z.enum(["FEATURED", "ABOUT", "CONTACT", "DEFAULT"]).optional(),
   files: z
-    .array(z.object({ url: z.string(), type: z.string(), name: z.string() }))
+    .array(
+      z.object({
+        url: z.string(),
+        type: z.string(),
+        name: z.string(),
+        deleted: z.boolean().optional(),
+      }),
+    )
     .optional(),
 });

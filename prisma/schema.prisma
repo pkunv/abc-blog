@@ -54,7 +54,7 @@ model Post {
 
 model File {
     id        Int      @id @default(autoincrement())
-    url       String
+    url       String   @unique
     name      String
     type      String
     altText   String?
