@@ -23,6 +23,7 @@ It's easy to use, has a friendly UI and it's a good starting base if you want to
 - Dark and light theme
 - Search queries
 - Data cache
+- Internalization (available languages: English, Polish, German)
 
 ## Tech stack
 
@@ -51,6 +52,7 @@ NEXTAUTH_URL="http://your-blog.com" # URL of your deployed blog
 ADMIN_USERNAME="" # Admin dashboard username
 ADMIN_PASSWORD="" # Admin dashboard password
 
+# If applicable, localized version is going to be used from this "BLOG_LANGUAGE" value.
 BLOG_LANGUAGE="en-US" # Blog language, this value will displayed datetime format, must follow BCP 47 standard
 BLOG_NAME="ABC Blog" # Global blog name appended in metadata, header and footer
 BLOG_THEME="dark" # Blog theme, available "light" or "black"

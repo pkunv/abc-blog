@@ -60,9 +60,11 @@ const formSchema = postSchema;
 export default function PostForm({
   data,
   carouselEnabled,
+  t,
 }: {
   data?: z.infer<typeof formSchema>;
   carouselEnabled: boolean;
+  t: IntlMessages["postForm"];
 }) {
   const [isDeleteFileDialogOpen, setIsDeleteFileDialogOpen] = useState(false);
   const [deleteFileUrl, setDeleteFileUrl] = useState<string | null>(null);
@@ -89,7 +91,7 @@ export default function PostForm({
 
   const createPost = api.post.create.useMutation({
     onSuccess: () => {
-      toast.success("Post created!");
+      toast.success(t.created);
       router.push("/dashboard");
       router.refresh();
 
@@ -101,7 +103,7 @@ export default function PostForm({
   });
   const updatePost = api.post.update.useMutation({
     onSuccess: (data) => {
-      toast.success("Post updated!");
+      toast.success(t.updated);
       router.push(`/dashboard/${data.slug}`);
       router.refresh();
     },
@@ -111,7 +113,7 @@ export default function PostForm({
   });
   const deletePost = api.post.delete.useMutation({
     onSuccess: () => {
-      toast.success("Post deleted!");
+      toast.success(t.deleted);
       router.push("/dashboard");
       router.refresh();
     },
@@ -141,14 +143,11 @@ export default function PostForm({
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
+              <FormLabel>{t.title}</FormLabel>
               <FormControl>
-                <Input placeholder="New post title" {...field} />
+                <Input placeholder={t.titlePlaceholder} {...field} />
               </FormControl>
-              <FormDescription>
-                This is will be the title of your new post, and will be used in
-                the URL.
-              </FormDescription>
+              <FormDescription>{t.titleDescription}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -158,16 +157,14 @@ export default function PostForm({
           name="content"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Content</FormLabel>
+              <FormLabel>{t.content}</FormLabel>
               <FormControl>
                 <PlateEditor
                   onChange={field.onChange}
                   initialValue={fromJSONToPlate(field.value)}
                 />
               </FormControl>
-              <FormDescription>
-                You can append images by copy-pasting them.
-              </FormDescription>
+              <FormDescription>{t.contentDescription}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -177,16 +174,11 @@ export default function PostForm({
           name="keywords"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Keywords</FormLabel>
+              <FormLabel>{t.keywords}</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="technology,blog posting,wholesome"
-                  {...field}
-                />
+                <Input placeholder={t.keywordsPlaceholder} {...field} />
               </FormControl>
-              <FormDescription>
-                Insert keywords of your post separated by commas.
-              </FormDescription>
+              <FormDescription>{t.keywordsDescription}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -196,13 +188,11 @@ export default function PostForm({
           name="category"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Category</FormLabel>
+              <FormLabel>{t.category}</FormLabel>
               <FormControl>
                 <Input placeholder="Special or 2024-12" {...field} />
               </FormControl>
-              <FormDescription>
-                Previously unused category will attach to your blog navigation.
-              </FormDescription>
+              <FormDescription>{t.categoryDescription}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -212,7 +202,7 @@ export default function PostForm({
           name="active"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Public</FormLabel>
+              <FormLabel>{t.public}</FormLabel>
               <FormControl>
                 <Checkbox
                   className="ml-2 self-center"
@@ -220,9 +210,7 @@ export default function PostForm({
                   onCheckedChange={field.onChange}
                 />
               </FormControl>
-              <FormDescription>
-                You can set your post to non-public to save it as a draft.
-              </FormDescription>
+              <FormDescription>{t.publicDescription}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -236,21 +224,19 @@ export default function PostForm({
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a display place" />
+                    <SelectValue placeholder={t.placementPlaceholder} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="DEFAULT">Default</SelectItem>
-                  <SelectItem value="FEATURED">Featured posts</SelectItem>
-                  <SelectItem value="ABOUT">About page</SelectItem>
-                  <SelectItem value="CONTACT">Contact page</SelectItem>
+                  <SelectItem value="DEFAULT">{t.placementDefault}</SelectItem>
+                  <SelectItem value="FEATURED">
+                    {t.placementFeatured}
+                  </SelectItem>
+                  <SelectItem value="ABOUT">{t.placementAbout}</SelectItem>
+                  <SelectItem value="CONTACT">{t.placementContact}</SelectItem>
                 </SelectContent>
               </Select>
-              <FormDescription>
-                You can set your post to be displayed in a static area, like
-                Contact or About page. Featured posts are going to be appended
-                to the top of the Home page.
-              </FormDescription>
+              <FormDescription>{t.placementDescription}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -260,14 +246,13 @@ export default function PostForm({
             <AlertDialog open={isDeleteFileDialogOpen}>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogTitle>{t.dialogSure}</AlertDialogTitle>
                   <AlertDialogDescription>
-                    This will permanently delete your post carousel image. You
-                    can undo this action by refreshing the page.
+                    {t.dialogDescription}
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogCancel>{t.dialogCancel}</AlertDialogCancel>
                   <AlertDialogAction
                     type="button"
                     onClick={() => {
@@ -292,7 +277,7 @@ export default function PostForm({
                       }
                     }}
                   >
-                    Delete
+                    {t.dialogDelete}
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
@@ -300,9 +285,9 @@ export default function PostForm({
             <FormField
               control={form.control}
               name="files"
-              render={({ field }) => (
+              render={({}) => (
                 <FormItem>
-                  <FormLabel>Carousel images</FormLabel>
+                  <FormLabel>{t.carousel}</FormLabel>
                   <FormControl>
                     <UploadButton
                       endpoint="imageUploader"
@@ -315,7 +300,7 @@ export default function PostForm({
                             name: file.name,
                           });
                         });
-                        toast.success("Files uploaded!");
+                        toast.success(t.carouselSuccess);
                         form.clearErrors("files");
                       }}
                       onUploadError={(error: Error) => {
@@ -333,9 +318,9 @@ export default function PostForm({
                       <Table>
                         <TableHeader>
                           <TableRow>
-                            <TableHead>Filename</TableHead>
-                            <TableHead>Type</TableHead>
-                            <TableHead>Action</TableHead>
+                            <TableHead>{t.carouselFilename}</TableHead>
+                            <TableHead>{t.carouselType}</TableHead>
+                            <TableHead>{t.carouselAction}</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -373,11 +358,15 @@ export default function PostForm({
               <>
                 <div className="flex items-center gap-2">
                   <Eye />
-                  <TypographySmall>{data.views} views</TypographySmall>
+                  <TypographySmall>
+                    {data.views} {t.views}
+                  </TypographySmall>
                 </div>
                 <div className="flex items-center gap-2">
                   <SquareChartGantt />
-                  <TypographySmall>{data.reads} reads</TypographySmall>
+                  <TypographySmall>
+                    {data.reads} {t.reads}
+                  </TypographySmall>
                 </div>
               </>
             )}
@@ -393,16 +382,13 @@ export default function PostForm({
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      Are you absolutely sure?
-                    </AlertDialogTitle>
+                    <AlertDialogTitle>{t.dialogSure}</AlertDialogTitle>
                     <AlertDialogDescription>
-                      This action cannot be undone. This will permanently delete
-                      your post.
+                      {t.dialogDescription}
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogCancel>{t.dialogCancel}</AlertDialogCancel>
                     <AlertDialogAction
                       onClick={() => {
                         if (data.id) deletePost.mutate({ id: data.id });
@@ -411,7 +397,7 @@ export default function PostForm({
                       {deletePost.isPending ? (
                         <Spinner className="grayscale invert" />
                       ) : (
-                        "Delete"
+                        <>{t.dialogDelete}</>
                       )}
                     </AlertDialogAction>
                   </AlertDialogFooter>
@@ -422,7 +408,7 @@ export default function PostForm({
               {createPost.isPending || updatePost.isPending ? (
                 <Spinner className="grayscale invert" />
               ) : (
-                "Submit"
+                <>{t.submit}</>
               )}
             </Button>
           </div>

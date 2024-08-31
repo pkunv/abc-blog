@@ -96,6 +96,7 @@
     "lucide-react": "^0.427.0",
     "next": "^14.2.4",
     "next-auth": "^4.24.7",
+    "next-intl": "^3.18.1",
     "next-themes": "^0.3.0",
     "prismjs": "^1.29.0",
     "react": "^18.3.1",

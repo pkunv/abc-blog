@@ -1,0 +1,72 @@
+{
+  "footer": {
+    "m": "erstellt mit ABC Blog Engine erstellt von"
+  },
+  "nav": {
+    "home": "Startseite",
+    "about": "Über uns",
+    "contact": "Kontakt",
+    "dashboard": "Dashboard",
+    "login": "Anmelden",
+    "logout": "Abmelden",
+    "searchBarPlaceholder": "Suchen..."
+  },
+  "category": {
+    "posts": "Beiträge"
+  },
+  "dashboard": {
+    "create": "Neuen Beitrag erstellen",
+    "update": "Beitrag aktualisieren",
+    "postList": "Beiträge"
+  },
+  "search": {
+    "results": "Suchergebnisse"
+  },
+  "postForm": {
+    "title": "Titel",
+    "titlePlaceholder": "Titel des neuen Beitrags",
+    "titleDescription": "Geben Sie einen Titel für Ihren Beitrag ein",
+    "content": "Inhalt",
+    "contentDescription": "Sie können Bilder durch Kopieren und Einfügen hinzufügen.",
+    "keywords": "Schlüsselwörter",
+    "keywordsPlaceholder": "Technologie,Bloggen,positiv",
+    "keywordsDescription": "Geben Sie die Schlüsselwörter Ihres Beitrags durch Kommas getrennt ein.",
+    "category": "Kategorie",
+    "categoryDescription": "Eine zuvor nicht verwendete Kategorie wird zur Blog-Navigation hinzugefügt.",
+    "public": "Öffentlich",
+    "publicDescription": "Sie können Ihren Beitrag auf nicht öffentlich setzen, um ihn als Entwurf zu speichern.",
+    "placement": "Platzierung",
+    "placementPlaceholder": "Wählen Sie einen Anzeigebereich",
+    "placementDescription": "Sie können Ihren Beitrag als hervorgehoben auf der Startseite anzeigen lassen.",
+    "placementDefault": "Standard",
+    "placementFeatured": "Hervorgehoben",
+    "placementAbout": "Über uns",
+    "placementContact": "Kontakt",
+    "dialogSure": "Sind Sie absolut sicher?",
+    "dialogDescription": "Dadurch wird das Karussellbild Ihres Beitrags dauerhaft gelöscht. Sie können diese Aktion rückgängig machen, indem Sie die Seite neu laden.",
+    "dialogCancel": "Abbrechen",
+    "dialogDelete": "Löschen",
+    "carousel": "Karussellbilder",
+    "carouselSuccess": "Dateien hochgeladen!",
+    "carouselFilename": "Dateiname",
+    "carouselType": "Typ",
+    "carouselAction": "Aktion",
+    "views": "Aufrufe",
+    "reads": "Lesevorgänge",
+    "submit": "Absenden",
+    "created": "Beitrag erstellt!",
+    "updated": "Beitrag aktualisiert!",
+    "deleted": "Beitrag gelöscht!"
+  },
+  "empty": {
+    "noPostsFound": "Keine Beiträge gefunden."
+  },
+  "post": {
+    "views": "Aufrufe"
+  },
+  "home": {
+    "featuredPosts": "Hervorgehobene Beiträge",
+    "latestPost": "Neuester Beitrag",
+    "browse": "Neue Beiträge durchsuchen"
+  }
+}

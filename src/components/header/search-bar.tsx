@@ -2,12 +2,17 @@
 
 import { InputWithIcon } from "@/components/ui/input-with-icon";
 import { Search } from "lucide-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 
-export function SearchBar() {
+export function SearchBar({
+  localizedPathname,
+  placeholder,
+}: {
+  localizedPathname: string;
+  placeholder: string;
+}) {
   const searchParams = useSearchParams();
-  const pathname = usePathname();
   const router = useRouter();
 
   const handleSearch = useDebouncedCallback(
@@ -15,7 +20,7 @@ export function SearchBar() {
       const params = new URLSearchParams(searchParams);
       if (value === null) params.delete(name);
       params.set("q", value!);
-      router.replace(`/search?${params.toString()}`);
+      router.replace(`${localizedPathname}?${params.toString()}`);
     },
     500,
   );
@@ -24,7 +29,7 @@ export function SearchBar() {
     <div>
       <InputWithIcon
         startIcon={Search}
-        placeholder="Search..."
+        placeholder={placeholder}
         className="mx-auto w-[80dvw] sm:w-full"
         defaultValue={searchParams.get("q") ?? ""}
         onChange={(e) => handleSearch("q", e.target.value)}

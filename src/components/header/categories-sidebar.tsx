@@ -4,6 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { getLocalizedPathname } from "@/i18n";
 import { blogProps } from "@/lib/getBlogProps";
 import { isValidDate } from "@/lib/isValidDate";
 import { type RouterOutputs } from "@/trpc/react";
@@ -14,6 +15,7 @@ export function CategoriesSidebar({
 }: {
   categories: RouterOutputs["post"]["getCategories"];
 }) {
+  const localizedPostsPathname = getLocalizedPathname("/posts");
   return (
     <aside className="hidden sm:block">
       <nav className="px-2">
@@ -42,7 +44,7 @@ export function CategoriesSidebar({
                   {category.posts.map((post) => (
                     <li key={post.slug}>
                       <Link
-                        href={`/posts/${post.slug}`}
+                        href={`${localizedPostsPathname}/${post.slug}`}
                         scroll={false}
                         prefetch={false}
                         className="hover:underline"

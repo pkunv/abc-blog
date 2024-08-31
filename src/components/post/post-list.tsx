@@ -12,7 +12,7 @@ export async function PostList({
   drafts,
   take,
 }: {
-  href: "/dashboard" | "/posts";
+  href: string;
   category?: string;
   q?: string;
   placement?: "DEFAULT" | "ALL";

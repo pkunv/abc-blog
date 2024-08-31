@@ -14,6 +14,8 @@ import { env } from "@/env";
 import { blogProps } from "@/lib/getBlogProps";
 import { TRPCReactProvider } from "@/trpc/react";
 import { api } from "@/trpc/server";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 import Script from "next/script";
 
 export const metadata: Metadata = {
@@ -41,13 +43,12 @@ export default async function RootLayout({
   const categories = await api.post.getCategories();
 
   const theme = blogProps.theme === "dark" ? "dark" : "light";
+
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html
-      lang={
-        env.BLOG_LANGUAGE.includes("-") ? env.BLOG_LANGUAGE.split("-")[0] : "en"
-      }
-      className={`${GeistMono.variable}`}
-    >
+    <html lang={locale} className={`${GeistMono.variable}`}>
       {env.UMAMI_URL && env.UMAMI_WEBSITE_ID && (
         <Script
           async
@@ -56,34 +57,39 @@ export default async function RootLayout({
         />
       )}
       <body className="flex h-full min-h-dvh flex-col overflow-y-hidden">
-        <TRPCReactProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme={theme}
-            disableTransitionOnChange
-          >
-            <Toaster />
-            <div className="max-w-screen grid h-screen grid-cols-4">
-              <div className="hidden xl:block"></div>
-              <div className="col-span-full col-start-1 grid h-screen grid-cols-subgrid overflow-x-hidden overflow-y-scroll xl:col-span-3 xl:col-start-2">
-                <div className="col-span-full col-start-1 flex h-fit min-h-screen w-full flex-col items-center justify-start justify-self-center overflow-hidden sm:col-span-3 xl:col-span-2">
-                  <Header />
-                  <CategoriesHeader
-                    links={categories.map((category) => {
-                      return { title: category.category, href: category.href };
-                    })}
-                  />
-                  <BackSection />
-                  <main className="mx-auto flex w-full flex-1 flex-col items-center justify-start gap-2 p-4">
-                    {children}
-                  </main>
-                  <Footer />
+        <NextIntlClientProvider messages={messages}>
+          <TRPCReactProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme={theme}
+              disableTransitionOnChange
+            >
+              <Toaster />
+              <div className="max-w-screen grid h-screen grid-cols-4">
+                <div className="hidden xl:block"></div>
+                <div className="col-span-full col-start-1 grid h-screen grid-cols-subgrid overflow-x-hidden overflow-y-scroll xl:col-span-3 xl:col-start-2">
+                  <div className="col-span-full col-start-1 flex h-fit min-h-screen w-full flex-col items-center justify-start justify-self-center overflow-hidden sm:col-span-3 xl:col-span-2">
+                    <Header />
+                    <CategoriesHeader
+                      links={categories.map((category) => {
+                        return {
+                          title: category.category,
+                          href: category.href,
+                        };
+                      })}
+                    />
+                    <BackSection />
+                    <main className="mx-auto flex w-full flex-1 flex-col items-center justify-start gap-2 p-4">
+                      {children}
+                    </main>
+                    <Footer />
+                  </div>
+                  <CategoriesSidebar categories={categories} />
                 </div>
-                <CategoriesSidebar categories={categories} />
               </div>
-            </div>
-          </ThemeProvider>
-        </TRPCReactProvider>
+            </ThemeProvider>
+          </TRPCReactProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

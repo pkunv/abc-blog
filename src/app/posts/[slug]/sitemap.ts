@@ -1,4 +1,5 @@
 import { env } from "@/env";
+import { getLocalizedPathname } from "@/i18n";
 import { db } from "@/server/db";
 import { type MetadataRoute } from "next";
 
@@ -29,8 +30,10 @@ export default async function sitemap({
       },
     },
   });
+  const postLocalizedPathname = getLocalizedPathname("/posts");
+
   return posts.map((post) => ({
-    url: `${env.NEXTAUTH_URL}/post/${post.slug}`,
+    url: `${env.NEXTAUTH_URL}${postLocalizedPathname}/${post.slug}`,
     lastModified: post.updatedAt,
   }));
 }

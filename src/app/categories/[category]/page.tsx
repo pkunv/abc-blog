@@ -1,6 +1,8 @@
 import { PostList } from "@/components/post/post-list";
 import { TypographyH2 } from "@/components/ui/typography";
+import { getLocalizedPathname } from "@/i18n";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata({
   params,
@@ -28,10 +30,14 @@ export default async function CategoryPage({
 }: {
   params: { category: string };
 }) {
+  const t = await getTranslations("category");
   return (
     <>
-      <TypographyH2 className="w-full text-left">Posts</TypographyH2>
-      <PostList href="/posts" category={params.category} />
+      <TypographyH2 className="w-full text-left">{t("posts")}</TypographyH2>
+      <PostList
+        href={getLocalizedPathname("/posts")}
+        category={params.category}
+      />
     </>
   );
 }

@@ -1,0 +1,72 @@
+{
+  "footer": {
+    "m": "silnik ABC Blog stworzony przez"
+  },
+  "nav": {
+    "home": "Strona główna",
+    "about": "O blogu",
+    "contact": "Kontakt",
+    "dashboard": "Dashboard",
+    "login": "Zaloguj się",
+    "logout": "Wyloguj się",
+    "searchBarPlaceholder": "Szukaj..."
+  },
+  "category": {
+    "posts": "Posty"
+  },
+  "dashboard": {
+    "create": "Utwórz nowy post",
+    "update": "Zaktualizuj post",
+    "postList": "Posty"
+  },
+  "search": {
+    "results": "Wyniki wyszukiwania"
+  },
+  "postForm": {
+    "title": "Tytuł",
+    "titlePlaceholder": "Tytuł nowego postu",
+    "titleDescription": "Wprowadź tytuł swojego postu",
+    "content": "Treść",
+    "contentDescription": "Możesz dodawać obrazy, kopiując i wklejając je.",
+    "keywords": "Słowa kluczowe",
+    "keywordsPlaceholder": "technologia,blogowanie,pozytywne",
+    "keywordsDescription": "Wprowadź słowa kluczowe swojego postu, oddzielając je przecinkami.",
+    "category": "Kategoria",
+    "categoryDescription": "Nieużywana wcześniej kategoria zostanie dodana do nawigacji bloga.",
+    "public": "Publiczny",
+    "publicDescription": "Możesz ustawić swój post jako niepubliczny, aby zapisać go jako wersję roboczą.",
+    "placement": "Umiejscowienie",
+    "placementPlaceholder": "Wybierz miejsce wyświetlania",
+    "placementDescription": "Możesz ustawić swój post jako wyróżniony na stronie głównej.",
+    "placementDefault": "Domyślne",
+    "placementFeatured": "Wyróżniony",
+    "placementAbout": "O blogu",
+    "placementContact": "Kontakt",
+    "dialogSure": "Czy jesteś absolutnie pewny?",
+    "dialogDescription": "To trwale usunie ten element (post, zdjęcie).",
+    "dialogCancel": "Anuluj",
+    "dialogDelete": "Usuń",
+    "carousel": "Obrazy karuzeli",
+    "carouselSuccess": "Pliki przesłane!",
+    "carouselFilename": "Nazwa pliku",
+    "carouselType": "Typ",
+    "carouselAction": "Akcja",
+    "views": "wyświetlenia",
+    "reads": "przeczytań",
+    "submit": "Prześlij",
+    "created": "Post utworzony!",
+    "updated": "Post zaktualizowany!",
+    "deleted": "Post usunięty!"
+  },
+  "empty": {
+    "noPostsFound": "Nie znaleziono postów."
+  },
+  "post": {
+    "views": "wyświetlenia"
+  },
+  "home": {
+    "featuredPosts": "Wyróżnione posty",
+    "latestPost": "Najnowszy post",
+    "browse": "Przeglądaj nowe posty"
+  }
+}

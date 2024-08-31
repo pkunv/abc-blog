@@ -1,0 +1,72 @@
+{
+  "footer": {
+    "m": "created with ABC Blog engine made by"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "dashboard": "Dashboard",
+    "login": "Login",
+    "logout": "Logout",
+    "searchBarPlaceholder": "Search..."
+  },
+  "category": {
+    "posts": "Posts"
+  },
+  "dashboard": {
+    "create": "Create a new post",
+    "update": "Update post",
+    "postList": "Posts"
+  },
+  "search": {
+    "results": "Search results"
+  },
+  "postForm": {
+    "title": "Title",
+    "titlePlaceholder": "New post title",
+    "titleDescription": "Enter a title for your post",
+    "content": "Content",
+    "contentDescription": "You can append images by copy-pasting them.",
+    "keywords": "Keywords",
+    "keywordsPlaceholder": "technology,blog posting,wholesome",
+    "keywordsDescription": "Insert keywords of your post separated by commas.",
+    "category": "Category",
+    "categoryDescription": "Previously unused category will attach to your blog navigation.",
+    "public": "Public",
+    "publicDescription": "You can set your post to non-public to save it as a draft.",
+    "placement": "Placement",
+    "placementPlaceholder": "Select a display place",
+    "placementDescription": "You can set your post to be featured on the homepage.",
+    "placementDefault": "Default",
+    "placementFeatured": "Featured",
+    "placementAbout": "About",
+    "placementContact": "Contact",
+    "dialogSure": "Are you absolutely sure?",
+    "dialogDescription": "This will action is going to permanently delete this element.",
+    "dialogCancel": "Cancel",
+    "dialogDelete": "Delete",
+    "carousel": "Carousel images",
+    "carouselSuccess": "Files uploaded!",
+    "carouselFilename": "Filename",
+    "carouselType": "Type",
+    "carouselAction": "Action",
+    "views": "views",
+    "reads": "reads",
+    "submit": "Submit",
+    "created": "Post created!",
+    "updated": "Post updated!",
+    "deleted": "Post deleted!"
+  },
+  "empty": {
+    "noPostsFound": "No posts found."
+  },
+  "post": {
+    "views": "views"
+  },
+  "home": {
+    "featuredPosts": "Featured Posts",
+    "latestPost": "Latest Post",
+    "browse": "Browse new posts"
+  }
+}

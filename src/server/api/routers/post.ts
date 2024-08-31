@@ -1,3 +1,4 @@
+import { getLocalizedPathname } from "@/i18n";
 import { fromJSONToPlainText } from "@/lib/plate";
 import {
   createTRPCRouter,
@@ -38,7 +39,7 @@ export const postRouter = createTRPCRouter({
             if (!acc[post.category]) {
               acc[post.category] = {
                 category: post.category,
-                href: `/category/${post.category}`,
+                href: `${getLocalizedPathname("/categories")}/${post.category}`,
                 posts: [],
               };
             }

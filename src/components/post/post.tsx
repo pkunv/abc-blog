@@ -11,7 +11,7 @@ import { blogProps } from "@/lib/getBlogProps";
 import {
   fromJSONToPlainText,
   fromJSONToPlate,
-  RichText,
+  type RichText,
   SerializedPlateElement,
 } from "@/lib/plate";
 import type { RouterOutputs } from "@/trpc/react";
