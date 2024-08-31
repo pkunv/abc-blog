@@ -48,7 +48,10 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={`${GeistMono.variable}`}>
+    <html
+      lang={locale}
+      className={env.ALT_FONT ? "font-mono" : `${GeistMono.variable}`}
+    >
       {env.UMAMI_URL && env.UMAMI_WEBSITE_ID && (
         <Script
           async

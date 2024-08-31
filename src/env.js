@@ -40,6 +40,9 @@ export const env = createEnv({
     UMAMI_WEBSITE_ID: z.string().optional(),
     UPLOADTHING_SECRET: z.string().optional(),
     UPLOADTHING_APP_ID: z.string().optional(),
+    ALT_FONT: z
+      .preprocess((val) => val === "1" || val === "true", z.boolean())
+      .optional(),
   },
 
   /**
@@ -73,6 +76,7 @@ export const env = createEnv({
     UMAMI_WEBSITE_ID: process.env.UMAMI_WEBSITE_ID,
     UPLOADTHING_SECRET: process.env.UPLOADTHING_SECRET,
     UPLOADTHING_APP_ID: process.env.UPLOADTHING_APP_ID,
+    ALT_FONT: process.env.ALT_FONT,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
