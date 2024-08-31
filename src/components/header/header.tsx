@@ -7,9 +7,12 @@ import { api } from "@/trpc/server";
 import { getTranslations } from "next-intl/server";
 
 export async function Header() {
-  const session = await getServerAuthSession();
-  const specialPages = await api.layout.getEnabledSpecialPages();
-  const t = await getTranslations("nav");
+  const [session, specialPages, t] = await Promise.all([
+    getServerAuthSession(),
+    api.layout.getEnabledSpecialPages(),
+    getTranslations("nav"),
+  ]);
+
   const links = [
     {
       title: t("home"),
