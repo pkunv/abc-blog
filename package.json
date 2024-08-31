@@ -8,6 +8,7 @@
     "db:generate": "prisma migrate dev",
     "db:migrate": "prisma migrate deploy",
     "db:push": "prisma db push",
+    "db:push:force": "prisma db push --accept-data-loss",
     "db:studio": "prisma studio",
     "db:seed": "prisma db seed",
     "dev": "next dev",

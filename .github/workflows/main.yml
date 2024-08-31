@@ -33,7 +33,7 @@ jobs:
       - name: Generate Prisma
         run: npm run postinstall
       - name: Push Prisma
-        run: npm run db:push --accept-data-loss
+        run: npm run db:push:force
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Playwright tests
