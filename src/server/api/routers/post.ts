@@ -31,6 +31,7 @@ export const postRouter = createTRPCRouter({
         await ctx.db.post.findMany({
           select: { category: true, title: true, slug: true },
           where: { active: true, placement: "DEFAULT" },
+          orderBy: { createdAt: "desc" },
         })
       )
         // group by "category" property
