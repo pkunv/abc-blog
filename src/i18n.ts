@@ -5,12 +5,15 @@ export default getRequestConfig(async () => {
   // Provide a static locale, fetch a user setting,
   // read from `cookies()`, `headers()`, etc.
   const locale = env.BLOG_LANGUAGE.split("-")[0];
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-  const messages =
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    (await import(`./messages/${locale}.json`)).default ??
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    (await import(`./messages/en.json`)).default;
+  let messages = {};
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+    messages =
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      (await import(`./messages/${locale}.json`)).default;
+  } catch (error) {
+    messages = (await import(`./messages/en.json`)).default;
+  }
 
   return {
     locale,
