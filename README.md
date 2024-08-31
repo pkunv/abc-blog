@@ -24,6 +24,8 @@ It's easy to use, has a friendly UI and it's a good starting base if you want to
 - Search queries
 - Data cache
 - Internalization (available languages: English, Polish, German)
+- Carousel post images with UploadThing integration
+- Analytics with Umami integration
 
 ## Tech stack
 
@@ -60,8 +62,13 @@ BLOG_KEYWORDS="nextjs, prisma, next-auth, tailwindcss, blog" # Keywords for SEO
 
 LOCALIZE_MONTHS_BY_LANG="1" # When enabled, standard "year-month" blog post category will be displayed in words.
 
+# Analytics integration
 UMAMI_URL="" # Optional Umami Analytics URL
 UMAMI_WEBSITE_ID="" # Optional Umami Website URL
+
+# Post carousel images integration
+UPLOADTHING_SECRET="" # Optional UploadThing secret key
+UPLOADTHING_APP_ID="" # Optional UploadThing app id
 ```
 
 > **Warning:**
