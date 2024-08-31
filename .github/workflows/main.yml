@@ -27,6 +27,7 @@ jobs:
           echo BLOG_THEME=${{ secrets.BLOG_THEME }} >> .env
           echo BLOG_KEYWORDS=${{ secrets.BLOG_KEYWORDS }} >> .env
           echo LOCALIZE_MONTHS_BY_LANG=${{ secrets.LOCALIZE_MONTHS_BY_LANG }} >> .env
+          echo UPLOADTHING_SECRET=${{ secrets.UPLOADTHING_SECRET }} >> .env
           cat .env
       - name: Install dependencies
         run: npm ci

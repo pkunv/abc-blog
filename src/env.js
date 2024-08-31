@@ -38,8 +38,8 @@ export const env = createEnv({
     ),
     UMAMI_URL: z.string().optional(),
     UMAMI_WEBSITE_ID: z.string().optional(),
-    UPLOADTHING_SECRET: z.string().optional(),
-    UPLOADTHING_APP_ID: z.string().optional(),
+    UPLOADTHING_SECRET: z.string().default("sk_live_123"),
+    UPLOADTHING_APP_ID: z.string().default("ycod1ehjxh"),
     ALT_FONT: z
       .preprocess((val) => val === "1" || val === "true", z.boolean())
       .optional(),

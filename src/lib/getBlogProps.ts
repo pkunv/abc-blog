@@ -8,7 +8,5 @@ export const blogProps = {
   author: env.BLOG_AUTHOR,
   theme: env.BLOG_THEME,
   localizeMonths: env.LOCALIZE_MONTHS_BY_LANG,
-  carouselEnabled:
-    env.UPLOADTHING_APP_ID !== undefined &&
-    env.UPLOADTHING_SECRET !== undefined,
+  carouselEnabled: env.UPLOADTHING_SECRET !== "sk_live_",
 };
