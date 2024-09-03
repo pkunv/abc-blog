@@ -15,6 +15,7 @@ import {
   SerializedPlateElement,
 } from "@/lib/plate";
 import type { RouterOutputs } from "@/trpc/react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import type { BlogPosting, WithContext } from "schema-dts";
 
@@ -25,6 +26,7 @@ export default function Post({
   post: Exclude<RouterOutputs["post"]["get"], null>;
   blog: { name: string; language: string; author: string };
 }) {
+  const t = useTranslations("post");
   const jsonLd: WithContext<BlogPosting> = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -100,7 +102,7 @@ export default function Post({
               month: "long",
               year: "numeric",
             })}{" "}
-            • {post.views} views
+            • {post.views} {t("views")}
           </TypographyMuted>
         )}
       </article>
