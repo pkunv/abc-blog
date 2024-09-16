@@ -82,7 +82,7 @@ export default async function RootLayout({
                       })}
                     />
                     <BackSection />
-                    <main className="mx-auto flex w-full flex-1 flex-col items-center justify-start gap-2 p-4">
+                    <main className="mx-auto flex w-full flex-1 flex-col items-center justify-start gap-4 p-4">
                       {children}
                     </main>
                     <Footer />

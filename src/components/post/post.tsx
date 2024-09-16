@@ -65,7 +65,7 @@ export default function Post({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </section>
-      <article className="w-full space-y-2 text-left">
+      <article className="w-full space-y-2 pb-8 text-left">
         <TypographyH1 className="mb-4">{post.title}</TypographyH1>
         {fromJSONToPlate(post.content)?.map((node, index) => (
           <SerializedPlateElement node={node as RichText} key={index} />
