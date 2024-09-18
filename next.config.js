@@ -11,7 +11,7 @@ function getLocaleWithFallback() {
   // @ts-expect-error This is a validated environment variable.
   const language = process.env.BLOG_LANGUAGE.split("-")[0];
   if (!language) return "en";
-  if (!["de", "pl"].includes(language)) {
+  if (!["de", "pl", "fr", "es"].includes(language)) {
     return "en";
   }
   return language;
@@ -44,6 +44,24 @@ const rewrites = {
     { source: "/wpisy/:slug", destination: "/posts/:slug" },
     { source: "/wpisy", destination: "/posts" },
     { source: "/szukaj", destination: "/search" },
+  ],
+  fr: [
+    { source: "/", destination: "/" },
+    { source: "/a-propos", destination: "/about" },
+    { source: "/contact", destination: "/contact" },
+    { source: "/categories", destination: "/categories" },
+    { source: "/articles", destination: "/posts" },
+    { source: "/dashboard", destination: "/dashboard" },
+    { source: "/recherche", destination: "/search" },
+  ],
+  es: [
+    { source: "/", destination: "/" },
+    { source: "/acerca-de", destination: "/about" },
+    { source: "/contacto", destination: "/contact" },
+    { source: "/categorias", destination: "/categories" },
+    { source: "/entradas", destination: "/posts" },
+    { source: "/dashboard", destination: "/dashboard" },
+    { source: "/buscar", destination: "/search" },
   ],
 };
 

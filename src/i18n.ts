@@ -22,13 +22,13 @@ export default getRequestConfig(async () => {
   };
 });
 
-export function getLocaleWithFallback(): "en" | "de" | "pl" {
+export function getLocaleWithFallback(): "en" | "de" | "pl" | "fr" | "es" {
   const language = env.BLOG_LANGUAGE.split("-")[0];
   if (!language) return "en";
-  if (!["de", "pl"].includes(language)) {
+  if (!["de", "pl", "fr", "es"].includes(language)) {
     return "en";
   }
-  return language as "en" | "de" | "pl";
+  return language as "en" | "de" | "pl" | "fr" | "es";
 }
 /**
  * This function is used to get the localized pathname without the use of params and search queries
@@ -65,6 +65,24 @@ export function getLocalizedPathname(href: string) {
       { source: "/wpisy", destination: "/posts" },
       { source: "/dashboard", destination: "/dashboard" },
       { source: "/szukaj", destination: "/search" },
+    ],
+    fr: [
+      { source: "/", destination: "/" },
+      { source: "/a-propos", destination: "/about" },
+      { source: "/contact", destination: "/contact" },
+      { source: "/categories", destination: "/categories" },
+      { source: "/articles", destination: "/posts" },
+      { source: "/dashboard", destination: "/dashboard" },
+      { source: "/recherche", destination: "/search" },
+    ],
+    es: [
+      { source: "/", destination: "/" },
+      { source: "/acerca-de", destination: "/about" },
+      { source: "/contacto", destination: "/contact" },
+      { source: "/categorias", destination: "/categories" },
+      { source: "/entradas", destination: "/posts" },
+      { source: "/dashboard", destination: "/dashboard" },
+      { source: "/buscar", destination: "/search" },
     ],
   };
 
