@@ -1,0 +1,72 @@
+{
+  "footer": {
+    "m": "créé avec le moteur de blog ABC conçu par"
+  },
+  "nav": {
+    "home": "Accueil",
+    "about": "À propos",
+    "contact": "Contact",
+    "dashboard": "Tableau de bord",
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "searchBarPlaceholder": "Recherche..."
+  },
+  "category": {
+    "posts": "Articles"
+  },
+  "dashboard": {
+    "create": "Créer un nouvel article",
+    "update": "Mettre à jour l'article",
+    "postList": "Articles"
+  },
+  "search": {
+    "results": "Résultats de recherche"
+  },
+  "postForm": {
+    "title": "Titre",
+    "titlePlaceholder": "Titre du nouvel article",
+    "titleDescription": "Entrez un titre pour votre article",
+    "content": "Contenu",
+    "contentDescription": "Vous pouvez ajouter des images en les collant.",
+    "keywords": "Mots-clés",
+    "keywordsPlaceholder": "technologie,publication de blog,convivial",
+    "keywordsDescription": "Insérez les mots-clés de votre article séparés par des virgules.",
+    "category": "Catégorie",
+    "categoryDescription": "Une catégorie non utilisée auparavant sera ajoutée à la navigation de votre blog.",
+    "public": "Public",
+    "publicDescription": "Vous pouvez définir votre article comme non public pour l'enregistrer en tant que brouillon.",
+    "placement": "Placement",
+    "placementPlaceholder": "Sélectionnez un emplacement d'affichage",
+    "placementDescription": "Vous pouvez définir votre article comme article en vedette sur la page d'accueil.",
+    "placementDefault": "Par défaut",
+    "placementFeatured": "En vedette",
+    "placementAbout": "À propos",
+    "placementContact": "Contact",
+    "dialogSure": "Êtes-vous absolument sûr?",
+    "dialogDescription": "Cette action va supprimer définitivement cet élément.",
+    "dialogCancel": "Annuler",
+    "dialogDelete": "Supprimer",
+    "carousel": "Images du carrousel",
+    "carouselSuccess": "Fichiers téléchargés!",
+    "carouselFilename": "Nom du fichier",
+    "carouselType": "Type",
+    "carouselAction": "Action",
+    "views": "vues",
+    "reads": "lectures",
+    "submit": "Soumettre",
+    "created": "Article créé!",
+    "updated": "Article mis à jour!",
+    "deleted": "Article supprimé!"
+  },
+  "empty": {
+    "noPostsFound": "Aucun article trouvé."
+  },
+  "post": {
+    "views": "vues"
+  },
+  "home": {
+    "featuredPosts": "Articles en vedette",
+    "latestPost": "Dernier article",
+    "browse": "Parcourir les nouveaux articles"
+  }
+}
