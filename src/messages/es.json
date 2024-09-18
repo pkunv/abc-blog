@@ -1,0 +1,72 @@
+{
+  "footer": {
+    "m": "creado con el motor de blog ABC hecho por"
+  },
+  "nav": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "dashboard": "Panel de control",
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "searchBarPlaceholder": "Buscar..."
+  },
+  "category": {
+    "posts": "Publicaciones"
+  },
+  "dashboard": {
+    "create": "Crear una nueva publicación",
+    "update": "Actualizar publicación",
+    "postList": "Publicaciones"
+  },
+  "search": {
+    "results": "Resultados de la búsqueda"
+  },
+  "postForm": {
+    "title": "Título",
+    "titlePlaceholder": "Título de la nueva publicación",
+    "titleDescription": "Ingrese un título para su publicación",
+    "content": "Contenido",
+    "contentDescription": "Puede agregar imágenes copiándolas y pegándolas.",
+    "keywords": "Palabras clave",
+    "keywordsPlaceholder": "tecnología,publicación de blogs,agradable",
+    "keywordsDescription": "Inserte las palabras clave de su publicación separadas por comas.",
+    "category": "Categoría",
+    "categoryDescription": "Una categoría previamente no utilizada se adjuntará a la navegación de su blog.",
+    "public": "Público",
+    "publicDescription": "Puede configurar su publicación como no pública para guardarla como borrador.",
+    "placement": "Ubicación",
+    "placementPlaceholder": "Seleccione un lugar de exhibición",
+    "placementDescription": "Puede configurar su publicación para que aparezca en la página de inicio.",
+    "placementDefault": "Predeterminado",
+    "placementFeatured": "Destacado",
+    "placementAbout": "Acerca de",
+    "placementContact": "Contacto",
+    "dialogSure": "¿Está absolutamente seguro?",
+    "dialogDescription": "Esta acción eliminará permanentemente este elemento.",
+    "dialogCancel": "Cancelar",
+    "dialogDelete": "Eliminar",
+    "carousel": "Imágenes del carrusel",
+    "carouselSuccess": "¡Archivos subidos!",
+    "carouselFilename": "Nombre del archivo",
+    "carouselType": "Tipo",
+    "carouselAction": "Acción",
+    "views": "vistas",
+    "reads": "lecturas",
+    "submit": "Enviar",
+    "created": "¡Publicación creada!",
+    "updated": "¡Publicación actualizada!",
+    "deleted": "¡Publicación eliminada!"
+  },
+  "empty": {
+    "noPostsFound": "No se encontraron publicaciones."
+  },
+  "post": {
+    "views": "vistas"
+  },
+  "home": {
+    "featuredPosts": "Publicaciones destacadas",
+    "latestPost": "Última publicación",
+    "browse": "Explorar nuevas publicaciones"
+  }
+}
