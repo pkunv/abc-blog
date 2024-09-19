@@ -17,7 +17,12 @@
   "dashboard": {
     "create": "Neuen Beitrag erstellen",
     "update": "Beitrag aktualisieren",
-    "postList": "Beiträge"
+    "postList": "Beiträge",
+    "infoTitle": "Information",
+    "infoVersion": "version",
+    "infoTotalPosts": "Gesamtbeiträge",
+    "infoTotalViews": "Gesamtansichten",
+    "infoTotalReads": "Gesamtlesevorgänge"
   },
   "search": {
     "results": "Suchergebnisse"

@@ -1,14 +1,19 @@
 import { PostList } from "@/components/post/post-list";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/spinner";
-import { TypographyH2 } from "@/components/ui/typography";
+import { TypographyH2, TypographySmall } from "@/components/ui/typography";
 import { blogProps } from "@/lib/getBlogProps";
+import { api } from "@/trpc/server";
+import { Eye, Newspaper, SquareChartGantt } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import packageJson from "package.json";
 import { lazy, Suspense } from "react";
 
 export default async function DashboardPage() {
   const PostForm = lazy(() => import("../../components/post/post-form"));
   const t = await getTranslations("dashboard");
   const tPostForm = await getTranslations("postForm");
+  const stats = await api.post.getOverallStats();
   return (
     <>
       <TypographyH2 className="w-full text-left">{t("create")}</TypographyH2>
@@ -57,6 +62,28 @@ export default async function DashboardPage() {
       <Suspense fallback={<Spinner />}>
         <PostList href="/dashboard" placement={"ALL"} drafts={true} />
       </Suspense>
+      <TypographyH2 className="w-full text-left">{t("infoTitle")}</TypographyH2>
+      <Card className="w-full">
+        <CardHeader>
+          <CardTitle>
+            ABC Blog {t("infoVersion")}: {packageJson.version}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4">
+          <TypographySmall className="flex flex-row items-center gap-4">
+            <Newspaper />
+            {t("infoTotalPosts")}: {stats.totalPosts}
+          </TypographySmall>
+          <TypographySmall className="flex flex-row items-center gap-4">
+            <Eye />
+            {t("infoTotalViews")}: {stats.totalViews}
+          </TypographySmall>
+          <TypographySmall className="flex flex-row items-center gap-4">
+            <SquareChartGantt />
+            {t("infoTotalReads")}: {stats.totalReads}
+          </TypographySmall>
+        </CardContent>
+      </Card>
     </>
   );
 }

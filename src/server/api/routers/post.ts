@@ -25,6 +25,15 @@ function convertTitleToSlug(title: string) {
 }
 
 export const postRouter = createTRPCRouter({
+  getOverallStats: publicProcedure.query(async ({ ctx }) => {
+    return {
+      totalPosts: await ctx.db.post.count(),
+      totalViews: (await ctx.db.post.aggregate({ _sum: { views: true } }))._sum
+        .views,
+      totalReads: (await ctx.db.post.aggregate({ _sum: { reads: true } }))._sum
+        .reads,
+    };
+  }),
   getCategories: publicProcedure.query(async ({ ctx }) => {
     return Object.values(
       (

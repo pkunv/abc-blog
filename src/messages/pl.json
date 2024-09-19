@@ -17,7 +17,12 @@
   "dashboard": {
     "create": "Utwórz nowy post",
     "update": "Zaktualizuj post",
-    "postList": "Posty"
+    "postList": "Posty",
+    "infoTitle": "Informacje",
+    "infoVersion": "wersja",
+    "infoTotalPosts": "Wszystkie posty",
+    "infoTotalViews": "Wszystkie wyświetlenia",
+    "infoTotalReads": "Wszystkie przeczytania"
   },
   "search": {
     "results": "Wyniki wyszukiwania"

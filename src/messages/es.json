@@ -17,7 +17,12 @@
   "dashboard": {
     "create": "Crear una nueva publicación",
     "update": "Actualizar publicación",
-    "postList": "Publicaciones"
+    "postList": "Publicaciones",
+    "infoTitle": "Información",
+    "infoVersion": "versión",
+    "infoTotalPosts": "Publicaciones totales",
+    "infoTotalViews": "Vistas totales",
+    "infoTotalReads": "Lecturas totales"
   },
   "search": {
     "results": "Resultados de la búsqueda"

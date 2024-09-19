@@ -17,7 +17,12 @@
   "dashboard": {
     "create": "Créer un nouvel article",
     "update": "Mettre à jour l'article",
-    "postList": "Articles"
+    "postList": "Articles",
+    "infoTitle": "Information",
+    "infoVersion": "version",
+    "infoTotalPosts": "Total des articles",
+    "infoTotalViews": "Total des vues",
+    "infoTotalReads": "Total des lectures"
   },
   "search": {
     "results": "Résultats de recherche"
