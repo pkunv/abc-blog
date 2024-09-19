@@ -356,13 +356,13 @@ export default function PostForm({
           <div className="flex min-w-8 flex-col items-center gap-2">
             {data && (
               <>
-                <div className="flex items-center gap-2">
+                <div className="flex w-full items-center gap-2">
                   <Eye />
                   <TypographySmall>
                     {data.views} {t.views}
                   </TypographySmall>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex w-full items-center gap-2">
                   <SquareChartGantt />
                   <TypographySmall>
                     {data.reads} {t.reads}
