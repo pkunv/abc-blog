@@ -23,9 +23,10 @@ It's easy to use, has a friendly UI and it's a good starting base if you want to
 - Dark and light theme
 - Search queries
 - Data cache
-- Internalization (available languages: English, Polish, German)
+- Internalization (available languages: English, Polish, German, French, Spanish)
 - Carousel post images with UploadThing integration
 - Analytics with Umami integration
+- Automatic Favicon
 
 ## Tech stack
 
